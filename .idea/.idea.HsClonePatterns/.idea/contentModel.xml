@@ -21,6 +21,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Attack.cs" t="Include" />
           <e p="CardInfo.cs" t="Include" />
           <e p="CardManagerSrc.cs" t="Include" />
           <e p="CardMovement.cs" t="Include" />

@@ -18,15 +18,19 @@ public class FieldLogic : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         
         CardMovement card = eventData.pointerDrag.GetComponent<CardMovement>();
         //Выставление карты на стол если данный объект является картой
-        if (card)
+        if (card && card.GameManager.PlayerFieldCards.Count < 6 && card.GameManager.IsPlayerTurn)
+        {
+            //Добавление карты в общий список на поле игрока
+            card.GameManager.PlayerHandCards.Remove(card.GetComponent<CardInfo>());
+            card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfo>());
             card.DefaultParent = transform;
-
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //Проверка на перетягивание карты если это не поле или это поле противника поставить карту нельзя
-        if (eventData.pointerDrag == null || Type == FieldType.ENEMY_FIELD || Type == FieldType.ENEMY_HAND)
+        //Проверка на перетягивание карты если это не поле или это поле противника поставить карту нельзя 
+        if (eventData.pointerDrag == null || Type == FieldType.ENEMY_FIELD || Type == FieldType.ENEMY_HAND || Type == FieldType.SELF_HAND)
             return;
         //данное поле становится родителем для карты
         CardMovement card = eventData.pointerDrag.GetComponent<CardMovement>();
@@ -37,7 +41,7 @@ public class FieldLogic : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public void OnPointerExit(PointerEventData eventData)
     {
         //Проверка на перетягивание карты
-        if (eventData == null)
+        if (eventData.pointerDrag == null)
             return;
 
         CardMovement card = eventData.pointerDrag.GetComponent<CardMovement>();

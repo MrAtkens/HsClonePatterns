@@ -271,7 +271,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 149588797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420033}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChangeTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &149588797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,9 +433,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyHand: {fileID: 1962713902}
   PlayerHand: {fileID: 1533435735}
+  EnemyField: {fileID: 660163508}
+  PlayerField: {fileID: 877153439}
   CardPref: {fileID: 5819384432752294117, guid: fb022c09b7199724283c003c7eeee3e2, type: 3}
-  TurnTimeText: {fileID: 0}
-  EndTurnButton: {fileID: 0}
+  TurnTimeText: {fileID: 1734316491}
+  EndTurnButton: {fileID: 149588796}
+  PlayerHandCards: []
+  PlayerFieldCards: []
+  EnemyHandCards: []
+  EnemyFieldCards: []
 --- !u!1 &548934934
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,12 +582,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 5
+    m_Right: 5
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 30
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -680,12 +698,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 5
+    m_Right: 5
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 30
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1082,7 +1100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00027466, y: -3.638e-12}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1313295748
@@ -1180,7 +1198,7 @@ MonoBehaviour:
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 30
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1251,7 +1269,7 @@ GameObject:
   - component: {fileID: 1734316492}
   - component: {fileID: 1734316491}
   m_Layer: 5
-  m_Name: TurnTimeTex
+  m_Name: TurnTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1443,7 +1461,7 @@ MonoBehaviour:
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 30
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0

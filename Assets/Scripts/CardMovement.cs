@@ -8,8 +8,8 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     Vector3 offset;
     //Поля на которых находятся карты
     public Transform DefaultParent, DefaultBufferCard;
-    private GameObject _bufferCard;
-    private GameManager _gameManager;
+    public GameObject BufferedCard;
+    public GameManager GameManager;
     //Проверка на то можно ли переносить карту
     public bool IsDragble;
 
@@ -17,8 +17,8 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         //Инициализация карты буфера и нашей единственной камеры
         MainCamera = Camera.allCameras[0];
-        _bufferCard = GameObject.Find("BufferCard");
-        _gameManager = FindObjectOfType<GameManager>();
+        BufferedCard = GameObject.Find("BufferCard");
+        GameManager = FindObjectOfType<GameManager>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -28,14 +28,15 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         DefaultParent = DefaultBufferCard = transform.parent;
 
         // Проверяем находится ли карта в нашей руке если нет значит перенести мы её не сможем
-        IsDragble = DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_HAND && _gameManager.isPlayerTurn;
+        IsDragble = (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_HAND || 
+                     DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_FIELD ) && GameManager.IsPlayerTurn;
         //Можно ли перетаскивать карту
         if (!IsDragble)
             return;
 
         // Выставляем местоположение карты на игровом поле
-        _bufferCard.transform.SetParent(DefaultParent);
-        _bufferCard.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        BufferedCard.transform.SetParent(DefaultParent);
+        BufferedCard.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
         transform.SetParent(DefaultParent.parent);
         //Нужно для возможность включение взаймодействия с картой на canvas который стал рукой игрока 
@@ -52,11 +53,12 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         Vector3 newPosition = MainCamera.ScreenToWorldPoint(eventData.position);
         transform.position = newPosition + offset;
 
-        if (_bufferCard.transform.parent != DefaultBufferCard)
-            _bufferCard.transform.SetParent(DefaultBufferCard);
+        if (BufferedCard.transform.parent != DefaultBufferCard)
+            BufferedCard.transform.SetParent(DefaultBufferCard);
 
         //Определение позиций карты относительно других карт
-        CheckPoisition();
+        if(DefaultParent.GetComponent<FieldLogic>().Type != FieldType.SELF_FIELD)
+            CheckPoisition();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -69,9 +71,9 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         //Взаймодействие с временной картой
-        transform.SetSiblingIndex(_bufferCard.transform.GetSiblingIndex());
-        _bufferCard.transform.SetParent(GameObject.Find("Canvas").transform);
-        _bufferCard.transform.localPosition = new Vector3(2538, 200); 
+        transform.SetSiblingIndex(BufferedCard.transform.GetSiblingIndex());
+        BufferedCard.transform.SetParent(GameObject.Find("Canvas").transform);
+        BufferedCard.transform.localPosition = new Vector3(2538, 200); 
     }
 
 
@@ -84,12 +86,12 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             if (transform.position.x < DefaultBufferCard.GetChild(i).position.x)
             {
                 newIndex = i;
-                if (_bufferCard.transform.GetSiblingIndex() < newIndex)
+                if (BufferedCard.transform.GetSiblingIndex() < newIndex)
                     newIndex--;
                 break;
             }
         }
         //Устанавливаем позицию карты
-        _bufferCard.transform.SetSiblingIndex(newIndex);
+        BufferedCard.transform.SetSiblingIndex(newIndex);
     }
 }

@@ -7,6 +7,9 @@ public struct Card {
     public string Description;
     public Sprite Logo;
     public int Attack, Health;
+    public bool CanAttack;
+
+    public bool IsAlive => Health > 0;
 
     public Card(string name, string description, string logoPath, int attack, int health)
     {
@@ -15,6 +18,17 @@ public struct Card {
         Logo = Resources.Load<Sprite>(logoPath);
         Attack = attack;
         Health = health;
+        CanAttack = false;
+    }
+
+    public void ChangeAttackState(bool can)
+    {
+        CanAttack = can;
+    }
+
+    public void GetDamage(int damage)
+    {
+        Health -= damage;
     }
 }
 
