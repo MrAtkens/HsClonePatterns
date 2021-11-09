@@ -3,45 +3,45 @@ using UnityEngine.EventSystems;
 
 public class CardLogic : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    //Игровая камера, отступ, класс перемещения карты и карты буфера, также сама карта буфер
+    //РРіСЂРѕРІР°СЏ РєР°РјРµСЂР°, РѕС‚СЃС‚СѓРї, РєР»Р°СЃСЃ РїРµСЂРµРјРµС‰РµРЅРёСЏ РєР°СЂС‚С‹ Рё РєР°СЂС‚С‹ Р±СѓС„РµСЂР°, С‚Р°РєР¶Рµ СЃР°РјР° РєР°СЂС‚Р° Р±СѓС„РµСЂ
     Camera MainCamera;
     Vector3 offset;
-    //Поля на которых находятся карты
+    //РџРѕР»СЏ РЅР° РєРѕС‚РѕСЂС‹С… РЅР°С…РѕРґСЏС‚СЃСЏ РєР°СЂС‚С‹
     public Transform DefaultParent, DefaultBufferCard;
     GameObject BufferCard;
 
     void Awake()
     {
-        //Инициализация карты буфера и нашей единственной камеры
+        //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєР°СЂС‚С‹ Р±СѓС„РµСЂР° Рё РЅР°С€РµР№ РµРґРёРЅСЃС‚РІРµРЅРЅРѕР№ РєР°РјРµСЂС‹
         MainCamera = Camera.allCameras[0];
         BufferCard = GameObject.Find("BufferCard");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Выставляем отступ во время перетягивание и присваеваем перетягивание к нашим картам
+        // Р’С‹СЃС‚Р°РІР»СЏРµРј РѕС‚СЃС‚СѓРї РІРѕ РІСЂРµРјСЏ РїРµСЂРµС‚СЏРіРёРІР°РЅРёРµ Рё РїСЂРёСЃРІР°РµРІР°РµРј РїРµСЂРµС‚СЏРіРёРІР°РЅРёРµ Рє РЅР°С€РёРј РєР°СЂС‚Р°Рј
         offset = transform.position - MainCamera.ScreenToWorldPoint(eventData.position);
         DefaultParent = DefaultBufferCard = transform.parent;
 
-        // Выставляем местоположение карты на игровом поле
+        // Р’С‹СЃС‚Р°РІР»СЏРµРј РјРµСЃС‚РѕРїРѕР»РѕР¶РµРЅРёРµ РєР°СЂС‚С‹ РЅР° РёРіСЂРѕРІРѕРј РїРѕР»Рµ
         BufferCard.transform.SetParent(DefaultParent);
         BufferCard.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
         transform.SetParent(DefaultParent.parent);
-        //Нужно для возможность включение взаймодействия с картой на canvas который стал рукой игрока 
+        //РќСѓР¶РЅРѕ РґР»СЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РІРєР»СЋС‡РµРЅРёРµ РІР·Р°Р№РјРѕРґРµР№СЃС‚РІРёСЏ СЃ РєР°СЂС‚РѕР№ РЅР° canvas РєРѕС‚РѕСЂС‹Р№ СЃС‚Р°Р» СЂСѓРєРѕР№ РёРіСЂРѕРєР° 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Перемещение карты по столу
+        //РџРµСЂРµРјРµС‰РµРЅРёРµ РєР°СЂС‚С‹ РїРѕ СЃС‚РѕР»Сѓ
         Vector3 newPosition = MainCamera.ScreenToWorldPoint(eventData.position);
         transform.position = newPosition + offset;
 
         if (BufferCard.transform.parent != DefaultBufferCard)
             BufferCard.transform.SetParent(DefaultBufferCard);
 
-        //Определение позиций карты относительно других карт
+        //РћРїСЂРµРґРµР»РµРЅРёРµ РїРѕР·РёС†РёР№ РєР°СЂС‚С‹ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РґСЂСѓРіРёС… РєР°СЂС‚
         CheckPoisition();
     }
 
@@ -50,7 +50,7 @@ public class CardLogic : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.SetParent(DefaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        //Взаймодействие с временной картой
+        //Р’Р·Р°Р№РјРѕРґРµР№СЃС‚РІРёРµ СЃ РІСЂРµРјРµРЅРЅРѕР№ РєР°СЂС‚РѕР№
         transform.SetSiblingIndex(BufferCard.transform.GetSiblingIndex());
         BufferCard.transform.SetParent(GameObject.Find("Canvas").transform);
         BufferCard.transform.localPosition = new Vector3(2538, 200); 
@@ -60,7 +60,7 @@ public class CardLogic : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     void CheckPoisition()
     {
         int newIndex = DefaultBufferCard.childCount;
-        // Здесь мы исходим из логики того что если карта которую мы хотим переместить по индексу меньше то она должна быть слева
+        // Р—РґРµСЃСЊ РјС‹ РёСЃС…РѕРґРёРј РёР· Р»РѕРіРёРєРё С‚РѕРіРѕ С‡С‚Рѕ РµСЃР»Рё РєР°СЂС‚Р° РєРѕС‚РѕСЂСѓСЋ РјС‹ С…РѕС‚РёРј РїРµСЂРµРјРµСЃС‚РёС‚СЊ РїРѕ РёРЅРґРµРєСЃСѓ РјРµРЅСЊС€Рµ С‚Рѕ РѕРЅР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ СЃР»РµРІР°
         for(int i = 0; i < DefaultBufferCard.childCount; i++)
         {
             if (transform.position.x < DefaultBufferCard.GetChild(i).position.x)
@@ -71,7 +71,7 @@ public class CardLogic : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 break;
             }
         }
-        //Устанавливаем позицию карты
+        //РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїРѕР·РёС†РёСЋ РєР°СЂС‚С‹
         BufferCard.transform.SetSiblingIndex(newIndex);
     }
 }
