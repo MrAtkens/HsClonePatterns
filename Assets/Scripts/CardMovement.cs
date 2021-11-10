@@ -1,5 +1,8 @@
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -28,12 +31,20 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         DefaultParent = DefaultBufferCard = transform.parent;
 
         // Проверяем находится ли карта в нашей руке если нет значит перенести мы её не сможем
-        IsDragble = (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_HAND || 
-                     DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_FIELD ) && GameManager.IsPlayerTurn;
+        IsDragble = GameManager.IsPlayerTurn && 
+                    (
+                        (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_HAND &&
+                         GameManager.PlayerMana >= GetComponent<CardInfo>().SelfCard.ManaCost) ||
+                        (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_FIELD &&
+                         GetComponent<CardInfo>().SelfCard.CanAttack)
+                    );
         //Можно ли перетаскивать карту
         if (!IsDragble)
             return;
 
+        if(GetComponent<CardInfo>().SelfCard.CanAttack)
+            GameManager.HighlightTargets(true);
+        
         // Выставляем местоположение карты на игровом поле
         BufferedCard.transform.SetParent(DefaultParent);
         BufferedCard.transform.SetSiblingIndex(transform.GetSiblingIndex());
@@ -67,6 +78,9 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (!IsDragble)
             return;
         
+        
+        GameManager.HighlightTargets(false);
+        
         transform.SetParent(DefaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
@@ -93,5 +107,40 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
         //Устанавливаем позицию карты
         BufferedCard.transform.SetSiblingIndex(newIndex);
+    }
+
+    //Анимация выставления карты на поле
+    public void MoveToField(Transform field)
+    {
+        transform.SetParent(GameObject.Find("Canvas").transform);
+        transform.DOMove(field.position, .5f);
+    }
+
+    //Анимация атаки
+    public void MoveToTarget(Transform target)
+    {
+        StartCoroutine(MoveToTargetCor(target));
+    }
+    //Анимация атаки и возврата карты на исходное положение
+    IEnumerator MoveToTargetCor(Transform target)
+    {
+        var pos = transform.position;
+        var parent = transform.parent;
+        int index = transform.GetSiblingIndex();
+
+        //Отключаем данный компонент из за смещение карт при анимаций
+        transform.parent.GetComponent<HorizontalLayoutGroup>().enabled = false;
+        
+        transform.SetParent(GameObject.Find("Canvas").transform);
+        //Перемещение к цели
+        transform.DOMove(target.position, .25f);
+        yield return new WaitForSeconds(.25f);
+        //Перемещение 
+        transform.DOMove(pos, .25f);
+        yield return new WaitForSeconds(.25f);
+
+        transform.SetParent(parent);
+        transform.SetSiblingIndex(index);
+        transform.parent.GetComponent<HorizontalLayoutGroup>().enabled = true;
     }
 }

@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     public GameObject ResultGameObject;
     public TextMeshProUGUI ResultText;
 
+    public AttackHero EnemyHero, PlayerHero;
+
     public List<CardInfo> PlayerHandCards = new List<CardInfo>(),
                           PlayerFieldCards = new List<CardInfo>(),
                           EnemyHandCards = new List<CardInfo>(),
@@ -50,9 +52,36 @@ public class GameManager : MonoBehaviour
     
     public bool IsPlayerTurn => Turn % 2 == 0;
 
+    
     private void Start()
     {
+        StartGame();
+    }
+
+    public void RestartGame()
+    {
+        StopAllCoroutines();
+        foreach (var card in PlayerHandCards)
+            Destroy(card.gameObject);
+        foreach (var card in PlayerFieldCards)
+            Destroy(card.gameObject);
+        foreach (var card in EnemyHandCards)
+            Destroy(card.gameObject);
+        foreach (var card in EnemyFieldCards)
+            Destroy(card.gameObject);
+        
+        PlayerHandCards.Clear();
+        PlayerFieldCards.Clear();
+        EnemyHandCards.Clear();
+        EnemyFieldCards.Clear();
+
+        StartGame();
+    }
+
+    private void StartGame()
+    {
         Turn = 0;
+        EndTurnButton.interactable = true;
         // инициализация игры
         CurrentGame = new Game();
         //Выдача карт противнику
@@ -60,14 +89,32 @@ public class GameManager : MonoBehaviour
         //Выдача карт игроку
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
+        PlayerMana = EnemyMana = 10;
         PlayerHP = EnemyHP = 30;
 
         //Показать количество маны
+        ShowHP();
         ShowMana();
 
+        ResultGameObject.SetActive(false);
         //Начать ходы
         StartCoroutine(TurnFunc());
     }
+    
+    private void CheckGameResult()
+    {
+        if(EnemyHP == 0 || PlayerHP == 0)
+        {
+            ResultGameObject.SetActive(true);
+            StopAllCoroutines();
+
+            if (EnemyHP == 0)
+                ResultText.text = "You win";
+            else
+                ResultText.text = "-25";
+        }
+    }
+    
     //Выдача карт в начале игры
     private void GiveHandCards(List<Card> deck, Transform hand)
     {
@@ -99,19 +146,7 @@ public class GameManager : MonoBehaviour
 
         deck.RemoveAt(0);
     }
-
-    //Смена хода
-    public void ChangeTurn()
-    {
-        StopAllCoroutines();
-        Turn++;
-        EndTurnButton.interactable = IsPlayerTurn;
-        //Выдача новых карт в конце хода
-        if (IsPlayerTurn) 
-            GiveNewCards();
-        //Отсчёт времени у таймера хода
-        StartCoroutine(TurnFunc());
-    }
+    
     // Выдача карт на новом ходе
     private void GiveNewCards()
     {
@@ -119,49 +154,47 @@ public class GameManager : MonoBehaviour
         GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
     
-    private void EnemyTurn(List<CardInfo> cards)
+    //Подсветка карт которые нельзя поставить из за нехватки маны
+    public void CheckCardsForAvailability()
     {
-        //Количества карт противника которое он будет ходить 
-        var count = Random.Range(0, cards.Count+1);
-
-        //цикл по выставлению карт на поле
-        for (var i = 0; i < count; i++)
+        foreach (var card in PlayerHandCards)
         {
-            if (EnemyFieldCards.Count > 5 || EnemyMana == 0)
-                return;
-
-            List<CardInfo> cardList = cards.FindAll(x => EnemyMana >= x.SelfCard.ManaCost);
-
-            if (cardList.Count == 0)
-                break;
-
-            ReduceMana(false, cardList[0].SelfCard.ManaCost);
-
-            cardList[0].ShowCardInfo(cardList[0].SelfCard, false);
-            cardList[0].transform.SetParent(EnemyField);
-            
-            EnemyFieldCards.Add(cardList[0]);
-            EnemyHandCards.Remove(cardList[0]);
-        }
-        // не атакует потому что нужно выставить canAttack
-        foreach (var activeCard in EnemyFieldCards.FindAll(x => x.SelfCard.CanAttack))
-        {
-            if(Random.Range(0, 2) == 0 &&
-                PlayerFieldCards.Count > 0)
-            {
-                var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
-
-                activeCard.SelfCard.ChangeAttackState(false);
-                CardsFight(enemy, activeCard);
-            }
-            else
-            {
-                activeCard.SelfCard.ChangeAttackState(false);
-                DamageHero(activeCard, false);
-            }
+            card.CheckForAvailability(PlayerMana);   
         }
     }
-
+    
+    //Функция уменьшение маны
+    public void ReduceMana(bool playerMana, int manacost)
+    {
+        // Проверка на то уменьшаем ли мы ману именно у игрока
+        if (playerMana)
+            PlayerMana = Mathf.Clamp(PlayerMana - manacost, 0, int.MaxValue);
+        else
+            EnemyMana = Mathf.Clamp(EnemyMana - manacost, 0, int.MaxValue);
+        //Обновляем количество маны у игроков
+        ShowMana();
+    }
+    
+    //Подсветка противника
+    public void HighlightTargets(bool highlight)
+    {
+        foreach (var card in EnemyFieldCards)
+            card.HighlightAsTarget(highlight);
+        EnemyHero.HighlightAsTarget(highlight);
+    }
+    //Вывод данных о мане и о hp
+    private void ShowMana()
+    {
+        PlayerManaText.text = PlayerMana.ToString();
+        EnemyManaText.text = EnemyMana.ToString();
+    }
+    private void ShowHP()
+    {
+        EnemyHpText.text = EnemyHP.ToString();
+        PlayerHpText.text = PlayerHP.ToString();
+    }
+    
+    // Сражение между картами
     public void CardsFight(CardInfo playerCard, CardInfo enemyCard)
     {
         //нанесение урона по карте игрока и противника тоже
@@ -180,6 +213,7 @@ public class GameManager : MonoBehaviour
             enemyCard.RefreshData();
     }
 
+    //Уничтожение карты и нанесение урона
     void DestroyCard(CardInfo card)
     {
         card.GetComponent<CardMovement>().OnEndDrag(null);
@@ -193,30 +227,7 @@ public class GameManager : MonoBehaviour
         Destroy(card.gameObject);
     }
     
-    private void ShowMana()
-    {
-        PlayerManaText.text = PlayerMana.ToString();
-        EnemyManaText.text = EnemyMana.ToString();
-    }
-    private void ShowHP()
-    {
-        EnemyHpText.text = EnemyHP.ToString();
-        PlayerHpText.text = PlayerHP.ToString();
-    }
-
-    //Функция уменьшение маны
-    public void ReduceMana(bool playerMana, int manacost)
-    {
-        // Проверка на то уменьшаем ли мы ману именно у игрока
-        if (playerMana)
-            PlayerMana = Mathf.Clamp(PlayerMana - manacost, 0, int.MaxValue);
-        else
-            EnemyMana = Mathf.Clamp(EnemyMana - manacost, 0, int.MaxValue);
-        //Обновляем количество маны у игроков
-        ShowMana();
-    }
-
-
+    //Нанесение урона герою
     public void DamageHero(CardInfo card, bool isEnemyHero)
     {
         if (isEnemyHero)
@@ -239,6 +250,8 @@ public class GameManager : MonoBehaviour
         foreach (var card in PlayerFieldCards)
             card.HighliteOff();
 
+        CheckCardsForAvailability();
+
         if (IsPlayerTurn)
         {
             //Карты могут взаймодействовать с другими
@@ -247,45 +260,99 @@ public class GameManager : MonoBehaviour
                 card.SelfCard.ChangeAttackState(true);
                 card.HighliteOn();
             }
-
+            PlayerMana = 10;
+            
             while (TurnTime-- > 0)
             {
                 //Смена счётчика таймера и мы ждём одну секунду в итирацию
                 TurnTimeText.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
+            //Смена хода
+            ChangeTurn();
         }
         else
         {
             foreach (var card in EnemyFieldCards)
-            {
                 card.SelfCard.ChangeAttackState(true);
-            }
+            EnemyMana = 10;
 
-            while (TurnTime-- > 27)
-            {
-                TurnTimeText.text = TurnTime.ToString();
-                yield return new WaitForSeconds(1);
-            }
-            
-            if(EnemyHandCards.Count > 0)
-                EnemyTurn(EnemyHandCards);
+            StartCoroutine(EnemyTurn(EnemyHandCards));
         }
-        //Смена хода
+    }
+    private IEnumerator EnemyTurn(List<CardInfo> cards)
+    {
+        yield return new WaitForSeconds(1);
+        //Количества карт противника которое он будет ходить 
+        var count = Random.Range(0, cards.Count+1);
+
+        //цикл по выставлению карт на поле
+        for (var i = 0; i < count; i++)
+        {
+            if (EnemyFieldCards.Count > 5 || EnemyMana == 0 || EnemyHandCards.Count == 0)
+                break;
+
+            List<CardInfo> cardList = cards.FindAll(x => EnemyMana >= x.SelfCard.ManaCost);
+
+            if (cardList.Count == 0)
+                break;
+
+            cardList[0].GetComponent<CardMovement>().MoveToField(EnemyField);
+
+            ReduceMana(false, cardList[0].SelfCard.ManaCost);
+
+            yield return new WaitForSeconds(.51f);
+            
+            cardList[0].ShowCardInfo(cardList[0].SelfCard, false);
+            cardList[0].transform.SetParent(EnemyField);
+            
+            EnemyFieldCards.Add(cardList[0]);
+            EnemyHandCards.Remove(cardList[0]);
+        }
+        
+        yield return new WaitForSeconds(1);
+        
+        // не атакует потому что нужно выставить canAttack
+        foreach (var activeCard in EnemyFieldCards.FindAll(x => x.SelfCard.CanAttack))
+        {
+            if(Random.Range(0, 2) == 0 &&
+                PlayerFieldCards.Count > 0)
+            {
+                var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
+
+                activeCard.SelfCard.ChangeAttackState(false);
+                
+                activeCard.GetComponent<CardMovement>().MoveToTarget(enemy.transform);
+                yield return new WaitForSeconds(.75f);
+                
+                CardsFight(enemy, activeCard);
+            }
+            else
+            {
+                activeCard.SelfCard.ChangeAttackState(false);
+                
+                activeCard.GetComponent<CardMovement>().MoveToTarget(PlayerHero.transform);
+                yield return new WaitForSeconds(.75f);
+                
+                DamageHero(activeCard, false);
+            }
+            yield return new WaitForSeconds(.2f);
+        }
+        
+        yield return new WaitForSeconds(1);
         ChangeTurn();
     }
-
-    private void CheckGameResult()
+    
+    //Смена хода
+    public void ChangeTurn()
     {
-        if(EnemyHP == 0 || PlayerHP == 0)
-        {
-            ResultGameObject.SetActive(true);
-            StopAllCoroutines();
-
-            if (EnemyHP == 0)
-                ResultText.text = "You win";
-            else
-                ResultText.text = "-25";
-        }
+        StopAllCoroutines();
+        Turn++;
+        EndTurnButton.interactable = IsPlayerTurn;
+        //Выдача новых карт в конце хода
+        if (IsPlayerTurn) 
+            GiveNewCards();
+        //Отсчёт времени у таймера хода
+        StartCoroutine(TurnFunc());
     }
 }

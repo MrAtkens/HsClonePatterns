@@ -12,6 +12,8 @@ public struct Card {
     public bool CanAttack;
 
     public bool IsAlive => Health > 0;
+    public bool IsPlaced;
+
 
     public Card(string name, string description, string logoPath, int attack, int health, int manacost)
     {
@@ -22,6 +24,7 @@ public struct Card {
         Health = health;
         ManaCost = manacost;
         CanAttack = false;
+        IsPlaced = false;
     }
 
     public void ChangeAttackState(bool can)

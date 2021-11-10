@@ -10,6 +10,7 @@ public class CardInfo : MonoBehaviour
    public TextMeshProUGUI Name, Description, Attack, Health, ManaCost;
    public GameObject HideObject, HihgliteObject;
    public bool IsPlayer;
+   public Color NormalCol, TargetCol;
    public void HideCardInfo(Card card)
    {
       SelfCard = card;
@@ -46,5 +47,15 @@ public class CardInfo : MonoBehaviour
    public void HighliteOff()
    {
       HihgliteObject.SetActive(false);
+   }
+
+   public void CheckForAvailability(int currentMana)
+   {
+      GetComponent<CanvasGroup>().alpha = currentMana >= SelfCard.ManaCost ? 1 : .5f;
+   }
+
+   public void HighlightAsTarget(bool highlight)
+   {
+      GetComponent<Image>().color = highlight ? TargetCol : NormalCol;
    }
 }

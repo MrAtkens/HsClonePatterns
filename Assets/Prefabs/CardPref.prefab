@@ -614,6 +614,8 @@ MonoBehaviour:
   HideObject: {fileID: 8567525332518809979}
   HihgliteObject: {fileID: 5307455789878212400}
   IsPlayer: 0
+  NormalCol: {r: 0.5754717, g: 0.48046458, b: 0.48046458, a: 1}
+  TargetCol: {r: 0.8773585, g: 0.086908154, b: 0.086908154, a: 1}
 --- !u!114 &7331104805143298264
 MonoBehaviour:
   m_ObjectHideFlags: 0

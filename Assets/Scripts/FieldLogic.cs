@@ -19,14 +19,17 @@ public class FieldLogic : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         CardMovement card = eventData.pointerDrag.GetComponent<CardMovement>();
         //Выставление карты на стол если данный объект является картой
         if (card && card.GameManager.PlayerFieldCards.Count < 6 && card.GameManager.IsPlayerTurn &&
-            card.GameManager.PlayerMana >= card.GetComponent<CardInfo>().SelfCard.ManaCost)
+            card.GameManager.PlayerMana >= card.GetComponent<CardInfo>().SelfCard.ManaCost &&
+            !card.GetComponent<CardInfo>().SelfCard.IsPlaced)
         {
             //Добавление карты в общий список на поле игрока
             card.GameManager.PlayerHandCards.Remove(card.GetComponent<CardInfo>());
             card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfo>());
             card.DefaultParent = transform;
 
+            card.GetComponent<CardInfo>().SelfCard.IsPlaced = true;
             card.GameManager.ReduceMana(true, card.GetComponent<CardInfo>().SelfCard.ManaCost);
+            card.GameManager.CheckCardsForAvailability();
         }
     }
 
