@@ -34,6 +34,15 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI TurnTimeText;
     public Button EndTurnButton;
 
+    public int PlayerMana = 10, EnemyMana = 10;
+    public TextMeshProUGUI PlayerManaText, EnemyManaText;
+
+    public int PlayerHP, EnemyHP;
+    public TextMeshProUGUI PlayerHpText, EnemyHpText;
+
+    public GameObject ResultGameObject;
+    public TextMeshProUGUI ResultText;
+
     public List<CardInfo> PlayerHandCards = new List<CardInfo>(),
                           PlayerFieldCards = new List<CardInfo>(),
                           EnemyHandCards = new List<CardInfo>(),
@@ -51,18 +60,23 @@ public class GameManager : MonoBehaviour
         //Выдача карт игроку
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
+        PlayerHP = EnemyHP = 30;
+
+        //Показать количество маны
+        ShowMana();
+
         //Начать ходы
         StartCoroutine(TurnFunc());
     }
     //Выдача карт в начале игры
-    void GiveHandCards(List<Card> deck, Transform hand)
+    private void GiveHandCards(List<Card> deck, Transform hand)
     {
         int i = 0;
         while(i++ < 4)
             GiveCardToHand(deck, hand);
     }
     //Простая выдача карт в каждый ход
-    void GiveCardToHand(List<Card> deck, Transform hand)
+    private void GiveCardToHand(List<Card> deck, Transform hand)
     {
         if (deck.Count == 0)
             return;
@@ -105,7 +119,7 @@ public class GameManager : MonoBehaviour
         GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
     
-    void EnemyTurn(List<CardInfo> cards)
+    private void EnemyTurn(List<CardInfo> cards)
     {
         //Количества карт противника которое он будет ходить 
         var count = Random.Range(0, cards.Count+1);
@@ -113,25 +127,38 @@ public class GameManager : MonoBehaviour
         //цикл по выставлению карт на поле
         for (var i = 0; i < count; i++)
         {
-            if (EnemyFieldCards.Count > 5)
+            if (EnemyFieldCards.Count > 5 || EnemyMana == 0)
                 return;
+
+            List<CardInfo> cardList = cards.FindAll(x => EnemyMana >= x.SelfCard.ManaCost);
+
+            if (cardList.Count == 0)
+                break;
+
+            ReduceMana(false, cardList[0].SelfCard.ManaCost);
+
+            cardList[0].ShowCardInfo(cardList[0].SelfCard, false);
+            cardList[0].transform.SetParent(EnemyField);
             
-            cards[0].ShowCardInfo(cards[0].SelfCard, false);
-            cards[0].transform.SetParent(EnemyField);
-            
-            EnemyFieldCards.Add(cards[0]);
-            EnemyHandCards.Remove(cards[0]);
+            EnemyFieldCards.Add(cardList[0]);
+            EnemyHandCards.Remove(cardList[0]);
         }
         // не атакует потому что нужно выставить canAttack
         foreach (var activeCard in EnemyFieldCards.FindAll(x => x.SelfCard.CanAttack))
         {
-            if (PlayerFieldCards.Count == 0)
-                return;
+            if(Random.Range(0, 2) == 0 &&
+                PlayerFieldCards.Count > 0)
+            {
+                var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
 
-            var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
-            
-            activeCard.SelfCard.ChangeAttackState(false);
-            CardsFight(enemy, activeCard);
+                activeCard.SelfCard.ChangeAttackState(false);
+                CardsFight(enemy, activeCard);
+            }
+            else
+            {
+                activeCard.SelfCard.ChangeAttackState(false);
+                DamageHero(activeCard, false);
+            }
         }
     }
 
@@ -166,6 +193,42 @@ public class GameManager : MonoBehaviour
         Destroy(card.gameObject);
     }
     
+    private void ShowMana()
+    {
+        PlayerManaText.text = PlayerMana.ToString();
+        EnemyManaText.text = EnemyMana.ToString();
+    }
+    private void ShowHP()
+    {
+        EnemyHpText.text = EnemyHP.ToString();
+        PlayerHpText.text = PlayerHP.ToString();
+    }
+
+    //Функция уменьшение маны
+    public void ReduceMana(bool playerMana, int manacost)
+    {
+        // Проверка на то уменьшаем ли мы ману именно у игрока
+        if (playerMana)
+            PlayerMana = Mathf.Clamp(PlayerMana - manacost, 0, int.MaxValue);
+        else
+            EnemyMana = Mathf.Clamp(EnemyMana - manacost, 0, int.MaxValue);
+        //Обновляем количество маны у игроков
+        ShowMana();
+    }
+
+
+    public void DamageHero(CardInfo card, bool isEnemyHero)
+    {
+        if (isEnemyHero)
+            EnemyHP = Mathf.Clamp(EnemyHP - card.SelfCard.Attack, 0, int.MaxValue);
+        else
+            PlayerHP = Mathf.Clamp(PlayerHP - card.SelfCard.Attack, 0, int.MaxValue);
+
+        ShowHP();
+        card.HighliteOff();
+        CheckGameResult();
+    }
+
     //Отсчёт времени у таймера хода
     IEnumerator TurnFunc()
     {
@@ -194,6 +257,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            foreach (var card in EnemyFieldCards)
+            {
+                card.SelfCard.ChangeAttackState(true);
+            }
+
             while (TurnTime-- > 27)
             {
                 TurnTimeText.text = TurnTime.ToString();
@@ -205,5 +273,19 @@ public class GameManager : MonoBehaviour
         }
         //Смена хода
         ChangeTurn();
+    }
+
+    private void CheckGameResult()
+    {
+        if(EnemyHP == 0 || PlayerHP == 0)
+        {
+            ResultGameObject.SetActive(true);
+            StopAllCoroutines();
+
+            if (EnemyHP == 0)
+                ResultText.text = "You win";
+            else
+                ResultText.text = "-25";
+        }
     }
 }

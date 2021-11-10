@@ -7,6 +7,10 @@ public class Attack : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        //Если сейчас не ход игрока выходим из функций
+        if (!GetComponent<CardMovement>().GameManager.IsPlayerTurn)
+            return;
+
         CardInfo card = eventData.pointerDrag.GetComponent<CardInfo>();
 
         // Если данная карта может атаковать 
