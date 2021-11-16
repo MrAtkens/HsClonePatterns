@@ -20,23 +20,59 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d8c1bac-da35-4850-8693-b4a8b7006986" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/CardTop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/CardTop.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/enemySpr.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/enemySpr.jpg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/playerSpr.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/playerSpr.jpg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Attack.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Attack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AI.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AI.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/HeroType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/HeroType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObservable.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObservable.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObserver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObserver.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/PlayerBar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/PlayerBar.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UIController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UIController.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/CardPref.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/CardPref.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Attack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Attack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AttackHero.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AttackHero.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Creatures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Creatures/CreatureCard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Creatures/CreatureCard.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/Status.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/Status.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +83,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/OneDrive/Изображения/CardMovementScr.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/OneDrive/Изображения/GameManagerScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/DropPlaceScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/CardMovementScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/AI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/OneDrive/Изображения/DropPlaceScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/CardController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/OneDrive/Изображения/GameManagerScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/CardInfoScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/CardManagerScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/GameManagerScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/OneDrive/Изображения/CardMovementScr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -58,12 +102,29 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CardManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardManagerInit.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardLogic.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Attack.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Attack.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/AttackHero.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/ICard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/Creator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/AbstractClass.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UIController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/AI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs" />
       </list>
     </option>
   </component>
@@ -101,10 +162,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="4924">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="4924" />
+      <option name="pid" />
       <option name="selectedOptions">
         <set />
       </option>
@@ -123,6 +184,11 @@
       <workItem from="1636426280040" duration="3645000" />
       <workItem from="1636452420757" duration="834000" />
       <workItem from="1636469550993" duration="14240000" />
+      <workItem from="1636547395937" duration="16121000" />
+      <workItem from="1636722683964" duration="16805000" />
+      <workItem from="1636801028021" duration="11197000" />
+      <workItem from="1636962630555" duration="20748000" />
+      <workItem from="1637031558902" duration="2191000" />
     </task>
     <servers />
   </component>
@@ -176,76 +242,5 @@
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
     <state x="623" y="269" width="672" height="678" key="search.everywhere.popup/0.46.1920.1034@0.46.1920.1034" timestamp="1636485800841" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
-          <line>129</line>
-          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\GameManager.cs" initialLine="127">
-            <startOffsets>
-              <option value="3782" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3814" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
-          <line>130</line>
-          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\GameManager.cs" initialLine="128">
-            <startOffsets>
-              <option value="3831" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3838" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
-          <line>132</line>
-          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\GameManager.cs" initialLine="130">
-            <startOffsets>
-              <option value="3852" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3922" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
-          <line>135</line>
-          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\GameManager.cs" initialLine="133">
-            <startOffsets>
-              <option value="4006" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4036" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
-          <line>134</line>
-          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\GameManager.cs" initialLine="132">
-            <startOffsets>
-              <option value="3948" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3993" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
