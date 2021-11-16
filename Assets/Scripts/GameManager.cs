@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models;
 using Models.Enums;
 using Models.Observer;
+using Models.Weapons;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -191,12 +192,13 @@ public class GameManager : MonoBehaviour
     // Сражение между картами
     public void CardsFight(CardController attacker, CardController defender)
     {
+        GetWeapon(attacker);
         //нанесение урона по карте игрока и противника тоже
-        defender.Card.GetDamage(attacker.Card.Attack);
+        defender.Card.GetDamage(attacker.Card.GetAttackForDamage());
         attacker.OnDamageDeal();
         defender.OnTakeDamage(attacker);
         
-        attacker.Card.GetDamage(defender.Card.Attack);
+        attacker.Card.GetDamage(defender.Card.GetAttackForDamage());
         attacker.OnTakeDamage();
         //проверка на то жива ли карта после сражения
         attacker.CheckForAlive();
@@ -207,14 +209,17 @@ public class GameManager : MonoBehaviour
     //Нанесение урона герою
     public void DamageHero(CardController card, bool isEnemyHero)
     {
+        GetWeapon(card);
+        //Атака с использованием оружия и проверка на то чья карта сделала удар
         if (isEnemyHero)
-            Enemy.ApplyDamage(card.Card.Attack);
+            Enemy.ApplyDamage(card.Card.GetAttackForDamage());
         else
-            Player.ApplyDamage(card.Card.Attack);
+            Player.ApplyDamage(card.Card.GetAttackForDamage());
         
         card.OnDamageDeal();
         CheckForResult();
     }
+    
     
     //Подсветка карт которые нельзя поставить из за нехватки маны
     public void CheckCardsForManaAvailability()
@@ -294,5 +299,26 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(TurnFunc());
+    }
+    
+    //Выдача оружия если своё сломалось
+    private void GetWeapon(CardController card)
+    {
+        var random = Random.Range(0, 100);
+        Debug.Log("Durability " + card.Card.GetDurability());
+        if (card.Card.GetDurability() == 0)
+        {
+            Debug.Log("Random " + random);
+            if(random < 25)
+                card.Card.SetWeapon(new Axe(2, 2));
+            else if(random > 25 && random < 50)
+                card.Card.SetWeapon(new Mace(2, 3));
+            else if (random > 50 && random < 75)
+                card.Card.SetWeapon(new Sword(3, 1));
+            else if (random > 75)
+                card.Card.SetWeapon(new Arm());
+            card.Info.RefreshData();
+            Debug.Log(card.Card.GetWeaponDamage());
+        }
     }
 }

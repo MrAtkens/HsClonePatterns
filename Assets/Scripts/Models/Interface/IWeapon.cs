@@ -1,8 +1,10 @@
-﻿namespace Assets.Scripts.Models.Interface
+﻿namespace Models.Interface
 {
     public interface IWeapon
     {
-        int getDurability();
-        int useWeapon(int cardDamage);
+        int GetDurability();
+        int GetWeaponDamage();
+        string GetWeaponIcon();
+        int UseWeapon();
     }
 }

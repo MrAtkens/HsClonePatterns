@@ -1,24 +1,33 @@
-﻿using Assets.Scripts.Models.Interface;
-using System;
+﻿using System;
+using System.Text.RegularExpressions;
+using Models.Interface;
+using UnityEngine;
+using Random = System.Random;
 
-namespace Assets.Scripts.Models.Weapons
+namespace Models.Weapons
 {
-    public class Axe : IWeapon
+    public class Axe : AbstractWeapon
     {
-        public int Damage { get; set; }
-
-        public int getDurability()
+        public Axe(int durability, int damage) : base(durability, damage, WeaponIcons.AxeIcon)
         {
-            throw new NotImplementedException();
         }
-
-        public int useWeapon(int cardDamage)
+        public override int GetDurability()
         {
-            Random random = new Random();
-            int weaponDamage = random.Next(1, 10);
-            if(weaponDamage > 4)
-                return (int)Math.Round(cardDamage * 1.5);
-            return cardDamage + Damage;
+            return Durability;
+        }
+        public override int UseWeapon()
+        {
+            Durability = Mathf.Clamp(Durability - 1, 0, int.MaxValue); 
+            Debug.Log(Durability);
+            var random = new Random();
+            var weaponDamage = random.Next(1, 100);
+            if (weaponDamage > 50)
+            {
+                Debug.Log("Weapon damage: " + GetType() + " Durability " + Durability + " Damage " + Math.Round(Damage * 1.5));
+                return (int) Math.Round(Damage * 1.5);
+            }
+            Debug.Log("Weapon damage: " + GetType() + " Durability " + Durability + " Damage " + Damage);
+            return Damage;
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CardInfo : MonoBehaviour
 {
    public CardController cardController;
-   public Image Logo;
+   public Image Logo, WeaponIcon;
    public TextMeshProUGUI Name, Description, Attack, Health, ManaCost;
    public GameObject HideObject, HihgliteObject;
    public Color NormalCol, TargetCol, SpellTargetColor;
@@ -22,13 +22,16 @@ public class CardInfo : MonoBehaviour
       
       Logo.sprite = cardController.Card.Logo;
       Logo.preserveAspect = true;
+      WeaponIcon.sprite = cardController.Card.WeaponIcon;
+      WeaponIcon.preserveAspect = true;
       Name.text = cardController.Card.Name;
       Description.text = cardController.Card.Description;
-
+      
       if (cardController.Card.IsSpell)
       {
          Attack.gameObject.SetActive(false);
          Health.gameObject.SetActive(false);
+         WeaponIcon.gameObject.SetActive(false);
       }
       
       RefreshData();
@@ -37,9 +40,11 @@ public class CardInfo : MonoBehaviour
    //Обновить prefab карты
    public void RefreshData()
    {
-      Attack.text = cardController.Card.Attack.ToString();
+      Attack.text = (cardController.Card.Attack + cardController.Card.GetWeaponDamage()).ToString();
       Health.text = cardController.Card.Health.ToString();
       ManaCost.text = cardController.Card.ManaCost.ToString(); 
+      WeaponIcon.sprite = cardController.Card.WeaponIcon;
+      WeaponIcon.preserveAspect = true;
    }
    //подсветка карты на то можно ли её использовать на поле
    public void HighlightCard(bool isHighlight)

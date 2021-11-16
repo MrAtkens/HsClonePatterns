@@ -36,10 +36,7 @@ public class UIController : MonoBehaviour
     {
         ResultGO.SetActive(true);
 
-        if (GameManager.Instance.Enemy.GetHealth() == 0)
-            ResultTxt.text = "WIN";
-        else
-            ResultTxt.text = "-25";
+        ResultTxt.text = GameManager.Instance.Enemy.GetHealth() == 0 ? "WIN" : "-25";
     }
 
     public void UpdateTurnTime(int time)

@@ -1,24 +1,23 @@
-﻿using Assets.Scripts.Models.Interface;
+﻿using Models.Interface;
+using UnityEngine;
 
 namespace Models.Weapons
 {
-    public class Sword : IWeapon
+    public class Sword : AbstractWeapon
     {
-        private int Durability;
-        public int Damage { get; }
-        public Sword(int durability, int damage)
+        public Sword(int durability, int damage) : base(durability, damage, WeaponIcons.SwordIcon)
         {
-            Durability = durability;
-            Damage = damage;
         }
-        public int getDurability()
+        public override int GetDurability()
         {
             return Durability;
         }
 
-        public int useWeapon(int cardDamage)
+        public override int UseWeapon()
         {
-            return Damage + cardDamage;
+            Durability = Mathf.Clamp(Durability - 1, 0, int.MaxValue); 
+            Debug.Log("Weapon damage: " + GetType() + " Durability " + Durability + " Damage " + Damage);
+            return Damage;
         }
     }
 }

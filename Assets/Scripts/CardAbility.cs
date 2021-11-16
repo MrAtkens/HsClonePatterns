@@ -58,7 +58,7 @@ public class CardAbility : MonoBehaviour
                     break;
                 case AbilityType.COUNTER_ATTACK:
                     if(attacker != null)
-                        attacker.Card.GetDamage(cardController.Card.Attack);
+                        attacker.Card.GetDamage(cardController.Card.GetAttackForDamage());
                     break;
             }
         }
