@@ -6,22 +6,23 @@ using UnityEngine.UI;
 
 public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public CardController CardController;
     //Игровая камера, отступ, класс перемещения карты и карты буфера, также сама карта буфер
-    Camera MainCamera;
-    Vector3 offset;
+    private Camera MainCamera;
+    private Vector3 offset;
     //Поля на которых находятся карты
     public Transform DefaultParent, DefaultBufferCard;
-    public GameObject BufferedCard;
-    public GameManager GameManager;
+    private GameObject BufferedCard;
     //Проверка на то можно ли переносить карту
-    public bool IsDragble;
+    public bool IsDraggable;
+    private int startID;
+
 
     private void Awake()
     {
         //Инициализация карты буфера и нашей единственной камеры
         MainCamera = Camera.allCameras[0];
         BufferedCard = GameObject.Find("BufferCard");
-        GameManager = FindObjectOfType<GameManager>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -31,19 +32,21 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         DefaultParent = DefaultBufferCard = transform.parent;
 
         // Проверяем находится ли карта в нашей руке если нет значит перенести мы её не сможем
-        IsDragble = GameManager.IsPlayerTurn && 
+        IsDraggable = GameManager.Instance.IsPlayerTurn && 
                     (
                         (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_HAND &&
-                         GameManager.PlayerMana >= GetComponent<CardInfo>().SelfCard.ManaCost) ||
+                         GameManager.Instance.Player.GetMana() >= CardController.Card.ManaCost) ||
                         (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_FIELD &&
-                         GetComponent<CardInfo>().SelfCard.CanAttack)
+                         CardController.Card.CanAttack)
                     );
         //Можно ли перетаскивать карту
-        if (!IsDragble)
+        if (!IsDraggable)
             return;
+        
+        startID = transform.GetSiblingIndex();
 
-        if(GetComponent<CardInfo>().SelfCard.CanAttack)
-            GameManager.HighlightTargets(true);
+        if(CardController.Card.IsSpell || CardController.Card.CanAttack)
+            GameManager.Instance.HighlightTargets(CardController,true);
         
         // Выставляем местоположение карты на игровом поле
         BufferedCard.transform.SetParent(DefaultParent);
@@ -57,29 +60,32 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void OnDrag(PointerEventData eventData)
     {
         //Можно ли перетаскивать карту
-        if (!IsDragble)
+        if (!IsDraggable)
             return;
         
         //Перемещение карты по столу
-        Vector3 newPosition = MainCamera.ScreenToWorldPoint(eventData.position);
+        var newPosition = MainCamera.ScreenToWorldPoint(eventData.position);
         transform.position = newPosition + offset;
 
-        if (BufferedCard.transform.parent != DefaultBufferCard)
-            BufferedCard.transform.SetParent(DefaultBufferCard);
+        //Если карта является заклинанием анимация не происходит
+        if (!CardController.Card.IsSpell)
+        {
+            if (BufferedCard.transform.parent != DefaultBufferCard)
+                BufferedCard.transform.SetParent(DefaultBufferCard);
 
-        //Определение позиций карты относительно других карт
-        if(DefaultParent.GetComponent<FieldLogic>().Type != FieldType.SELF_FIELD)
-            CheckPoisition();
+            //Определение позиций карты относительно других карт
+            if(DefaultParent.GetComponent<FieldLogic>().Type != FieldType.SELF_FIELD)
+                CheckPoisition();
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         //Можно ли перетаскивать карту
-        if (!IsDragble)
+        if (!IsDraggable)
             return;
-        
-        
-        GameManager.HighlightTargets(false);
+
+        GameManager.Instance.HighlightTargets(CardController, false);
         
         transform.SetParent(DefaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -105,6 +111,8 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 break;
             }
         }
+        if (BufferedCard.transform.parent == DefaultParent)
+            newIndex = startID;
         //Устанавливаем позицию карты
         BufferedCard.transform.SetSiblingIndex(newIndex);
     }

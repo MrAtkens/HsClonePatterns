@@ -1,42 +1,9 @@
 using System.Collections.Generic;
+using Models;
+using Models.Enums;
 using UnityEngine;
 
 //Структура потому что это значимый тип и мы сможем передавать все данные а не ссылку
-public struct Card {
-    public string Name;
-    public string Description;
-    public Sprite Logo;
-    public int Attack;
-    public int Health;
-    public int ManaCost;
-    public bool CanAttack;
-
-    public bool IsAlive => Health > 0;
-    public bool IsPlaced;
-
-
-    public Card(string name, string description, string logoPath, int attack, int health, int manacost)
-    {
-        Name = name;
-        Description = description;
-        Logo = Resources.Load<Sprite>(logoPath);
-        Attack = attack;
-        Health = health;
-        ManaCost = manacost;
-        CanAttack = false;
-        IsPlaced = false;
-    }
-
-    public void ChangeAttackState(bool can)
-    {
-        CanAttack = can;
-    }
-
-    public void GetDamage(int damage)
-    {
-        Health -= damage;
-    }
-}
 
 public static class CardManager
 {
@@ -49,13 +16,39 @@ public class CardManagerSrc : MonoBehaviour
     public void Awake()
     {
         // Инициализация карт
-        CardManager.AllCards.Add(new Card("Litso", "Лицо", "Sprites/Cards/litso", 5, 5, 3));
-        CardManager.AllCards.Add(new Card("Buldiga","Лицо", "Sprites/Cards/buldiga", 2, 5, 5));
-        CardManager.AllCards.Add(new Card("Pominki", "Лицо", "Sprites/Cards/pominki", 10, 2, 10));
-        CardManager.AllCards.Add(new Card("Hmm", "Лицо", "Sprites/Cards/hmm", 1, 4, 6));
-        CardManager.AllCards.Add(new Card("Micro", "Лицо", "Sprites/Cards/micro", 2, 2, 4));
-        CardManager.AllCards.Add(new Card("Pomoika", "Лицо", "Sprites/Cards/pomoika", 1, 1, 2));
-        CardManager.AllCards.Add(new Card("Pomoika", "Лицо", "Sprites/Cards/pomoika", 1, 1, 1));
+        CardManager.AllCards.Add(new Card("ebalo", "","Sprites/Cards/ebalo", 5, 5, 6));
+        CardManager.AllCards.Add(new Card("buldiga", "","Sprites/Cards/buldiga", 4, 3, 5));
+        CardManager.AllCards.Add(new Card("hmm", "","Sprites/Cards/hmm", 3, 3, 4));
+        CardManager.AllCards.Add(new Card("micro", "","Sprites/Cards/micro", 2, 1, 2));
+        CardManager.AllCards.Add(new Card("pominki", "","Sprites/Cards/pominki", 8, 1, 7));
+        CardManager.AllCards.Add(new Card("pomoika", "","Sprites/Cards/pomoika", 1, 1, 1));
 
+        CardManager.AllCards.Add(new Card("provocation", "","Sprites/Cards/provocation", 1, 2, 3, AbilityType.PROVOCATION));
+        CardManager.AllCards.Add(new Card("regeneration", "","Sprites/Cards/regen", 4, 2, 5, AbilityType.REGENERATION_EACH_TURN));
+        CardManager.AllCards.Add(new Card("doubleAttack", "","Sprites/Cards/doubleAttack", 3, 2, 4, AbilityType.DOUBLE_ATTACK));
+        CardManager.AllCards.Add(new Card("instantActive", "","Sprites/Cards/instantActive", 2, 1, 2, AbilityType.INSTANT_ACTIVE));
+        CardManager.AllCards.Add(new Card("shield", "","Sprites/Cards/shield", 5, 1, 7, AbilityType.SHIELD));
+        CardManager.AllCards.Add(new Card("counterAttack", "","Sprites/Cards/counterAttack", 3, 1, 1, AbilityType.COUNTER_ATTACK));
+        
+        CardManager.AllCards.Add(new SpellCard("HEAL_ALLY_FIELD_CARDS",  "","Sprites/Cards/healAllyCards", 2,
+            SpellType.HEAL_ALLY_FIELD_CARDS, 2, TargetType.NO_TARGET));
+        CardManager.AllCards.Add(new SpellCard("DAMAGE_ENEMY_FIELD_CARDS", "","Sprites/Cards/damageEnemyCards", 2,
+            SpellType.DAMAGE_ENEMY_FIELD_CARDS, 2, TargetType.NO_TARGET));
+        CardManager.AllCards.Add(new SpellCard("HEAL_ALLY_HERO", "","Sprites/Cards/healAllyHero", 2,
+            SpellType.HEAL_ALLY_HERO, 2, TargetType.NO_TARGET));
+        CardManager.AllCards.Add(new SpellCard("DAMAGE_ENEMY_HERO", "","Sprites/Cards/damageEnemyHero", 2,
+            SpellType.DAMAGE_ENEMY_HERO, 2, TargetType.NO_TARGET));
+        CardManager.AllCards.Add(new SpellCard("HEAL_ALLY_CARD", "","Sprites/Cards/healAllyCard", 2,
+            SpellType.HEAL_ALLY_CARD, 2, TargetType.ALLY_CARD_TARGET));
+        CardManager.AllCards.Add(new SpellCard("DAMAGE_ENEMY_CARD","", "Sprites/Cards/damageEnemyCard", 2,
+            SpellType.DAMAGE_ENEMY_CARD, 2, TargetType.ENEMY_CARD_TARGET));
+        CardManager.AllCards.Add(new SpellCard("SHIELD_ON_ALLY_CARD", "","Sprites/Cards/shieldOnAllyCard", 2,
+            SpellType.SHIELD_ON_ALLY_CARD, 0, TargetType.ALLY_CARD_TARGET));
+        CardManager.AllCards.Add(new SpellCard("PROVOCATION_ON_ALLY_CARD", "","Sprites/Cards/provocationOnAllyCard", 2,
+            SpellType.PROVOCATION_ON_ALLY_CARD, 0, TargetType.ALLY_CARD_TARGET));
+        CardManager.AllCards.Add(new SpellCard("BUFF_CARD_DAMAGE", "","Sprites/Cards/buffCardDamage", 2,
+            SpellType.BUFF_CARD_DAMAGE, 2, TargetType.ALLY_CARD_TARGET));
+        CardManager.AllCards.Add(new SpellCard("DEBUFF_CARD_DAMAGE", "","Sprites/Cards/debuffCardDamage", 2,
+            SpellType.DEBUFF_CARD_DAMAGE, 2, TargetType.ENEMY_CARD_TARGET));
     }
 }

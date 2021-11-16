@@ -206,7 +206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &122251419
 RectTransform:
   m_ObjectHideFlags: 0
@@ -512,21 +512,10 @@ MonoBehaviour:
   PlayerHand: {fileID: 1533435735}
   EnemyField: {fileID: 660163508}
   PlayerField: {fileID: 877153439}
-  CardPref: {fileID: 5819384432752294117, guid: fb022c09b7199724283c003c7eeee3e2, type: 3}
-  TurnTimeText: {fileID: 1734316491}
-  EndTurnButton: {fileID: 149588796}
-  PlayerMana: 10
-  EnemyMana: 10
-  PlayerManaText: {fileID: 2028246998}
-  EnemyManaText: {fileID: 1694370134}
-  PlayerHP: 0
-  EnemyHP: 0
-  PlayerHpText: {fileID: 1584383227}
-  EnemyHpText: {fileID: 1646198541}
-  ResultGameObject: {fileID: 122251418}
-  ResultText: {fileID: 1803137294}
-  EnemyHero: {fileID: 714505160}
-  PlayerHero: {fileID: 874983007}
+  CardPref: {fileID: 1695226131855032, guid: fb022c09b7199724283c003c7eeee3e2, type: 3}
+  Player: {fileID: 874983008}
+  Enemy: {fileID: 714505161}
+  EnemyAI: {fileID: 714505160}
   PlayerHandCards: []
   PlayerFieldCards: []
   EnemyHandCards: []
@@ -733,6 +722,7 @@ GameObject:
   - component: {fileID: 714505157}
   - component: {fileID: 714505159}
   - component: {fileID: 714505158}
+  - component: {fileID: 714505161}
   - component: {fileID: 714505160}
   m_Layer: 5
   m_Name: EnemyHero
@@ -808,13 +798,73 @@ MonoBehaviour:
   m_GameObject: {fileID: 714505156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464b8d90c45944043af41effd63a3af8, type: 3}
+  m_Script: {fileID: 11500000, guid: b20b05c75e1b49969695b143e24a4d2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &714505161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714505156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d490a93e2d804b3d9b7b52146eb572b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  GameManager: {fileID: 519420033}
-  NormalCol: {r: 0, g: 0, b: 0, a: 0}
-  TargetCol: {r: 0, g: 0, b: 0, a: 0}
+  NormalCol: {r: 0, g: 0, b: 0, a: 0.45882353}
+  TargetCol: {r: 1, g: 0, b: 0, a: 1}
+  PlayerMana: {fileID: 1694370136}
+  PlayerHealth: {fileID: 1646198544}
+--- !u!1 &806486515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806486517}
+  - component: {fileID: 806486516}
+  m_Layer: 0
+  m_Name: UIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &806486516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806486515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf2ef07036e4afa90d35ffdec619ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResultGO: {fileID: 122251418}
+  ResultTxt: {fileID: 1803137294}
+  TurnTime: {fileID: 1734316491}
+  EndTurnBtn: {fileID: 149588796}
+--- !u!4 &806486517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806486515}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &874983003
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +876,7 @@ GameObject:
   - component: {fileID: 874983004}
   - component: {fileID: 874983006}
   - component: {fileID: 874983005}
-  - component: {fileID: 874983007}
+  - component: {fileID: 874983008}
   m_Layer: 5
   m_Name: PlayerHero
   m_TagString: Untagged
@@ -892,7 +942,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874983003}
   m_CullTransparentMesh: 1
---- !u!114 &874983007
+--- !u!114 &874983008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -901,13 +951,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 874983003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464b8d90c45944043af41effd63a3af8, type: 3}
+  m_Script: {fileID: 11500000, guid: d490a93e2d804b3d9b7b52146eb572b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  GameManager: {fileID: 519420033}
   NormalCol: {r: 0, g: 0, b: 0, a: 0.45882353}
-  TargetCol: {r: 1, g: 0, b: 0, a: 0.45882353}
+  TargetCol: {r: 0, g: 0, b: 0, a: 0.45882353}
+  PlayerMana: {fileID: 2028247000}
+  PlayerHealth: {fileID: 1584383230}
 --- !u!1 &877153438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,6 +1810,7 @@ GameObject:
   - component: {fileID: 1584383229}
   - component: {fileID: 1584383228}
   - component: {fileID: 1584383227}
+  - component: {fileID: 1584383230}
   m_Layer: 5
   m_Name: PlayerHP
   m_TagString: Untagged
@@ -1882,6 +1934,19 @@ RectTransform:
   m_AnchoredPosition: {x: 91, y: -117.5}
   m_SizeDelta: {x: 163, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1584383230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584383226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7489d309d10947ce8223f226a3ee9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerText: {fileID: 1584383227}
 --- !u!1 &1646198540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1958,7 @@ GameObject:
   - component: {fileID: 1646198543}
   - component: {fileID: 1646198542}
   - component: {fileID: 1646198541}
+  - component: {fileID: 1646198544}
   m_Layer: 5
   m_Name: EnemyHP
   m_TagString: Untagged
@@ -2016,6 +2082,19 @@ RectTransform:
   m_AnchoredPosition: {x: 91, y: 117.5}
   m_SizeDelta: {x: 163, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1646198544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646198540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7489d309d10947ce8223f226a3ee9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerText: {fileID: 1646198541}
 --- !u!1 &1694370132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,6 +2106,7 @@ GameObject:
   - component: {fileID: 1694370133}
   - component: {fileID: 1694370135}
   - component: {fileID: 1694370134}
+  - component: {fileID: 1694370136}
   m_Layer: 5
   m_Name: EnemyManaPool
   m_TagString: Untagged
@@ -2150,6 +2230,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694370132}
   m_CullTransparentMesh: 1
+--- !u!114 &1694370136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694370132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7489d309d10947ce8223f226a3ee9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerText: {fileID: 1694370134}
 --- !u!1 &1734316489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2620,6 +2713,7 @@ GameObject:
   - component: {fileID: 2028246997}
   - component: {fileID: 2028246999}
   - component: {fileID: 2028246998}
+  - component: {fileID: 2028247000}
   m_Layer: 5
   m_Name: PlayerManaPool
   m_TagString: Untagged
@@ -2743,6 +2837,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028246996}
   m_CullTransparentMesh: 1
+--- !u!114 &2028247000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028246996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7489d309d10947ce8223f226a3ee9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerText: {fileID: 2028246998}
 --- !u!1 &2109662882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,7 +2886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: -99.44}
+  m_AnchoredPosition: {x: 0, y: -99.44}
   m_SizeDelta: {x: 326.36, y: 72.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2109662884

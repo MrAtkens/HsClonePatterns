@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Models;
+using Models.Enums;
+using Models.Observer;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -18,40 +21,48 @@ public class Game
     // Инициализация карт в колодах
     List<Card> GiveDeckCard()
     {
-        var list = new List<Card>();
-        for(var i=0; i < 10; i++)
-            list.Add(CardManager.AllCards[Random.Range(0, CardManager.AllCards.Count)]);
+        List<Card> list = new List<Card>();
+
+        list.Add(CardManager.AllCards[6].GetCardCopy());
+
+        for (int i = 0; i < 20; i++)
+        {
+            var card = CardManager.AllCards[Random.Range(0, CardManager.AllCards.Count)];
+
+            if (card.IsSpell)
+                list.Add(((SpellCard)card).GetCardCopy());
+            else
+                list.Add(card.GetCardCopy());
+        }
         return list;
     }
 }
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+    
     public Game CurrentGame;
     // Поля рук игроков
     public Transform EnemyHand, PlayerHand, EnemyField, PlayerField;
     public GameObject CardPref;
     private int Turn, TurnTime = 30;
-    public TextMeshProUGUI TurnTimeText;
-    public Button EndTurnButton;
 
-    public int PlayerMana = 10, EnemyMana = 10;
-    public TextMeshProUGUI PlayerManaText, EnemyManaText;
-
-    public int PlayerHP, EnemyHP;
-    public TextMeshProUGUI PlayerHpText, EnemyHpText;
-
-    public GameObject ResultGameObject;
-    public TextMeshProUGUI ResultText;
-
-    public AttackHero EnemyHero, PlayerHero;
-
-    public List<CardInfo> PlayerHandCards = new List<CardInfo>(),
-                          PlayerFieldCards = new List<CardInfo>(),
-                          EnemyHandCards = new List<CardInfo>(),
-                          EnemyFieldCards = new List<CardInfo>();
+    public Player Player, Enemy;
+    public AI EnemyAI;
+    
+    public List<CardController> PlayerHandCards = new List<CardController>(),
+                          PlayerFieldCards = new List<CardController>(),
+                          EnemyHandCards = new List<CardController>(),
+                          EnemyFieldCards = new List<CardController>();
     
     public bool IsPlayerTurn => Turn % 2 == 0;
 
+    
+    private void Awake()
+    {
+        if(Instance == null)
+            Instance = this;
+    }
     
     private void Start()
     {
@@ -78,41 +89,43 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    private void StartGame()
+    void StartGame()
     {
         Turn = 0;
-        EndTurnButton.interactable = true;
-        // инициализация игры
+        
         CurrentGame = new Game();
-        //Выдача карт противнику
+        //Выдача карт
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
-        //Выдача карт игроку
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
+        Instance.Player.RestoreMana();
+        Instance.Enemy.RestoreMana();
+        Instance.Player.HealthRestore();
+        Instance.Enemy.HealthRestore();
 
-        PlayerMana = EnemyMana = 10;
-        PlayerHP = EnemyHP = 30;
 
-        //Показать количество маны
-        ShowHP();
-        ShowMana();
-
-        ResultGameObject.SetActive(false);
-        //Начать ходы
+        UIController.Instance.StartGame();
+        //Карутина игры
         StartCoroutine(TurnFunc());
     }
     
-    private void CheckGameResult()
+    public void CheckForResult()
     {
-        if(EnemyHP == 0 || PlayerHP == 0)
+        if (Instance.Enemy.GetHealth() == 0 || Instance.Player.GetHealth() == 0)
         {
-            ResultGameObject.SetActive(true);
             StopAllCoroutines();
-
-            if (EnemyHP == 0)
-                ResultText.text = "You win";
-            else
-                ResultText.text = "-25";
+            UIController.Instance.ShowResult();
         }
+    }
+
+    private void CreateCardPref(Card card, Transform hand)
+    {
+        var cardGameObject = Instantiate(CardPref, hand, false);
+        var cardC = cardGameObject.GetComponent<CardController>();
+        cardC.Init(card, hand == PlayerHand);
+        if(cardC.isPlayerCard)
+            PlayerHandCards.Add(cardC);
+        else
+            EnemyHandCards.Add(cardC);
     }
     
     //Выдача карт в начале игры
@@ -127,22 +140,8 @@ public class GameManager : MonoBehaviour
     {
         if (deck.Count == 0)
             return;
-
-        Card card = deck[0];
-        GameObject cardGameObject = Instantiate(CardPref, hand, false);
-
-        if (hand == EnemyHand)
-        {
-            cardGameObject.GetComponent<CardInfo>().HideCardInfo(card);
-            EnemyHandCards.Add(cardGameObject.GetComponent<CardInfo>());
-        }
-        else
-        {
-            cardGameObject.GetComponent<CardInfo>().ShowCardInfo(card, true);
-            PlayerHandCards.Add(cardGameObject.GetComponent<CardInfo>());
-            //Игрок не может атаковать сам себя
-            cardGameObject.GetComponent<Attack>().enabled = false;
-        }
+        
+        CreateCardPref(deck[0], hand);
 
         deck.RemoveAt(0);
     }
@@ -153,206 +152,147 @@ public class GameManager : MonoBehaviour
         GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
         GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
-    
-    //Подсветка карт которые нельзя поставить из за нехватки маны
-    public void CheckCardsForAvailability()
+
+    //Подсветка противника
+    public void HighlightTargets(CardController attacker, bool highlight)
     {
-        foreach (var card in PlayerHandCards)
+        var targets = new List<CardController>();
+
+        if (attacker.Card.IsSpell)
         {
-            card.CheckForAvailability(PlayerMana);   
+            var spellTarget = (SpellCard) attacker.Card;
+            if (spellTarget.SpellTarget == TargetType.NO_TARGET)
+                targets = new List<CardController>();
+            else if (spellTarget.SpellTarget == TargetType.ALLY_CARD_TARGET)
+                targets = PlayerFieldCards;
+            else
+                targets = EnemyFieldCards;
+        }
+        else
+        {
+            //Подсветка если есть провокаций 
+            if (EnemyFieldCards.Exists(x => x.Card.IsProvocation))
+                targets = EnemyFieldCards.FindAll(x => x.Card.IsProvocation);
+            else
+            {
+                targets = EnemyFieldCards;
+                Enemy.HighlightAsTarget(highlight);
+            }
+        }
+
+        foreach (var card in targets)
+        {
+            if(attacker.Card.IsSpell)
+                card.Info.HighlightAsSpellTarget(highlight);
+            else
+                card.Info.HighlightAsTarget(highlight);
         }
     }
-    
-    //Функция уменьшение маны
-    public void ReduceMana(bool playerMana, int manacost)
-    {
-        // Проверка на то уменьшаем ли мы ману именно у игрока
-        if (playerMana)
-            PlayerMana = Mathf.Clamp(PlayerMana - manacost, 0, int.MaxValue);
-        else
-            EnemyMana = Mathf.Clamp(EnemyMana - manacost, 0, int.MaxValue);
-        //Обновляем количество маны у игроков
-        ShowMana();
-    }
-    
-    //Подсветка противника
-    public void HighlightTargets(bool highlight)
-    {
-        foreach (var card in EnemyFieldCards)
-            card.HighlightAsTarget(highlight);
-        EnemyHero.HighlightAsTarget(highlight);
-    }
-    //Вывод данных о мане и о hp
-    private void ShowMana()
-    {
-        PlayerManaText.text = PlayerMana.ToString();
-        EnemyManaText.text = EnemyMana.ToString();
-    }
-    private void ShowHP()
-    {
-        EnemyHpText.text = EnemyHP.ToString();
-        PlayerHpText.text = PlayerHP.ToString();
-    }
-    
     // Сражение между картами
-    public void CardsFight(CardInfo playerCard, CardInfo enemyCard)
+    public void CardsFight(CardController attacker, CardController defender)
     {
         //нанесение урона по карте игрока и противника тоже
-        playerCard.SelfCard.GetDamage(enemyCard.SelfCard.Attack);
-        enemyCard.SelfCard.GetDamage(playerCard.SelfCard.Attack);
+        defender.Card.GetDamage(attacker.Card.Attack);
+        attacker.OnDamageDeal();
+        defender.OnTakeDamage(attacker);
         
-        //Проверка на то жива ли карта игрока, если жива то обновляем данные
-         if(!playerCard.SelfCard.IsAlive)
-            DestroyCard(playerCard);
-        else
-            playerCard.RefreshData();
-        //Проверка на то жива ли карта противника
-        if(!enemyCard.SelfCard.IsAlive)
-            DestroyCard(enemyCard);
-        else
-            enemyCard.RefreshData();
-    }
-
-    //Уничтожение карты и нанесение урона
-    void DestroyCard(CardInfo card)
-    {
-        card.GetComponent<CardMovement>().OnEndDrag(null);
-        
-        if (EnemyFieldCards.Exists(x => x == card))
-            EnemyFieldCards.Remove(card);
-        
-        if (PlayerFieldCards.Exists(x => x == card))
-            PlayerFieldCards.Remove(card);
-        
-        Destroy(card.gameObject);
+        attacker.Card.GetDamage(defender.Card.Attack);
+        attacker.OnTakeDamage();
+        //проверка на то жива ли карта после сражения
+        attacker.CheckForAlive();
+        defender.CheckForAlive();
     }
     
+    
     //Нанесение урона герою
-    public void DamageHero(CardInfo card, bool isEnemyHero)
+    public void DamageHero(CardController card, bool isEnemyHero)
     {
         if (isEnemyHero)
-            EnemyHP = Mathf.Clamp(EnemyHP - card.SelfCard.Attack, 0, int.MaxValue);
+            Enemy.ApplyDamage(card.Card.Attack);
         else
-            PlayerHP = Mathf.Clamp(PlayerHP - card.SelfCard.Attack, 0, int.MaxValue);
-
-        ShowHP();
-        card.HighliteOff();
-        CheckGameResult();
+            Player.ApplyDamage(card.Card.Attack);
+        
+        card.OnDamageDeal();
+        CheckForResult();
+    }
+    
+    //Подсветка карт которые нельзя поставить из за нехватки маны
+    public void CheckCardsForManaAvailability()
+    {
+        foreach (var card in PlayerHandCards)
+            card.Info.HighlightManaAvailability(Player.GetMana());
     }
 
     //Отсчёт времени у таймера хода
     IEnumerator TurnFunc()
     {
         TurnTime = 30;
-        TurnTimeText.text = TurnTime.ToString();
+        UIController.Instance.UpdateTurnTime(TurnTime);
 
-        //Отключение подстветки карты
         foreach (var card in PlayerFieldCards)
-            card.HighliteOff();
+            card.Info.HighlightCard(false);
 
-        CheckCardsForAvailability();
+        CheckCardsForManaAvailability();
 
         if (IsPlayerTurn)
         {
-            //Карты могут взаймодействовать с другими
+            //Активируем все карты игрока и способности тоже и включаем подстветку карт
             foreach (var card in PlayerFieldCards)
             {
-                card.SelfCard.ChangeAttackState(true);
-                card.HighliteOn();
+                card.Card.CanAttack = true;
+                card.Info.HighlightCard(true);
+                card.Ability.OnNewTurn();
             }
-            PlayerMana = 10;
-            
+
             while (TurnTime-- > 0)
             {
-                //Смена счётчика таймера и мы ждём одну секунду в итирацию
-                TurnTimeText.text = TurnTime.ToString();
+                UIController.Instance.UpdateTurnTime(TurnTime);
+                yield return new WaitForSeconds(1);
+            }
+
+            ChangeTurn();
+        }
+        else
+        {
+            //Способности на новом ходу и даём возможность картам атаковать на след ход
+            foreach (var card in EnemyFieldCards)
+            {
+                card.Card.CanAttack = true;
+                card.Ability.OnNewTurn();
+            }
+            //Противник делает ход
+            EnemyAI.MakeTurn();
+
+            while (TurnTime-- > 0)
+            {
+                UIController.Instance.UpdateTurnTime(TurnTime);
                 yield return new WaitForSeconds(1);
             }
             //Смена хода
             ChangeTurn();
         }
-        else
-        {
-            foreach (var card in EnemyFieldCards)
-                card.SelfCard.ChangeAttackState(true);
-            EnemyMana = 10;
-
-            StartCoroutine(EnemyTurn(EnemyHandCards));
-        }
     }
-    private IEnumerator EnemyTurn(List<CardInfo> cards)
-    {
-        yield return new WaitForSeconds(1);
-        //Количества карт противника которое он будет ходить 
-        var count = Random.Range(0, cards.Count+1);
-
-        //цикл по выставлению карт на поле
-        for (var i = 0; i < count; i++)
-        {
-            if (EnemyFieldCards.Count > 5 || EnemyMana == 0 || EnemyHandCards.Count == 0)
-                break;
-
-            List<CardInfo> cardList = cards.FindAll(x => EnemyMana >= x.SelfCard.ManaCost);
-
-            if (cardList.Count == 0)
-                break;
-
-            cardList[0].GetComponent<CardMovement>().MoveToField(EnemyField);
-
-            ReduceMana(false, cardList[0].SelfCard.ManaCost);
-
-            yield return new WaitForSeconds(.51f);
-            
-            cardList[0].ShowCardInfo(cardList[0].SelfCard, false);
-            cardList[0].transform.SetParent(EnemyField);
-            
-            EnemyFieldCards.Add(cardList[0]);
-            EnemyHandCards.Remove(cardList[0]);
-        }
-        
-        yield return new WaitForSeconds(1);
-        
-        // не атакует потому что нужно выставить canAttack
-        foreach (var activeCard in EnemyFieldCards.FindAll(x => x.SelfCard.CanAttack))
-        {
-            if(Random.Range(0, 2) == 0 &&
-                PlayerFieldCards.Count > 0)
-            {
-                var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
-
-                activeCard.SelfCard.ChangeAttackState(false);
-                
-                activeCard.GetComponent<CardMovement>().MoveToTarget(enemy.transform);
-                yield return new WaitForSeconds(.75f);
-                
-                CardsFight(enemy, activeCard);
-            }
-            else
-            {
-                activeCard.SelfCard.ChangeAttackState(false);
-                
-                activeCard.GetComponent<CardMovement>().MoveToTarget(PlayerHero.transform);
-                yield return new WaitForSeconds(.75f);
-                
-                DamageHero(activeCard, false);
-            }
-            yield return new WaitForSeconds(.2f);
-        }
-        
-        yield return new WaitForSeconds(1);
-        ChangeTurn();
-    }
-    
-    //Смена хода
+	
     public void ChangeTurn()
     {
         StopAllCoroutines();
         Turn++;
-        EndTurnButton.interactable = IsPlayerTurn;
-        //Выдача новых карт в конце хода
-        if (IsPlayerTurn) 
+
+        UIController.Instance.DisableTurnBtn();
+
+        if (IsPlayerTurn)
+        {
             GiveNewCards();
-        //Отсчёт времени у таймера хода
+
+            Instance.Player.IncreaseManaPool();
+            Instance.Player.RestoreMana();
+        }
+        else
+        {
+            Instance.Enemy.IncreaseManaPool();
+            Instance.Enemy.RestoreMana();
+        }
+
         StartCoroutine(TurnFunc());
     }
 }

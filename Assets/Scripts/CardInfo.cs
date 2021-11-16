@@ -5,57 +5,60 @@ using UnityEngine.UI;
 
 public class CardInfo : MonoBehaviour
 {
-   public Card SelfCard;
+   public CardController cardController;
    public Image Logo;
    public TextMeshProUGUI Name, Description, Attack, Health, ManaCost;
    public GameObject HideObject, HihgliteObject;
-   public bool IsPlayer;
-   public Color NormalCol, TargetCol;
-   public void HideCardInfo(Card card)
+   public Color NormalCol, TargetCol, SpellTargetColor;
+   public void HideCardInfo()
    {
-      SelfCard = card;
       HideObject.SetActive(true);
-      IsPlayer = false;
       ManaCost.text = "";
    }
-   public void ShowCardInfo(Card card, bool isPlayer)
+   //
+   public void ShowCardInfo()
    {
-      IsPlayer = isPlayer;
       HideObject.SetActive(false);
-      SelfCard = card;
-      Logo.sprite = card.Logo;
+      
+      Logo.sprite = cardController.Card.Logo;
       Logo.preserveAspect = true;
-      Name.text = card.Name;
-      Description.text = card.Description;
-      Attack.text = card.Attack.ToString();
-      Health.text = card.Health.ToString();
-      ManaCost.text = card.ManaCost.ToString();
-   }
+      Name.text = cardController.Card.Name;
+      Description.text = cardController.Card.Description;
 
-   public void RefreshData()
-   {
-      Attack.text = SelfCard.Attack.ToString();
-      Health.text = SelfCard.Health.ToString();
-      ManaCost.text = SelfCard.ManaCost.ToString(); 
-   }
-
-   public void HighliteOn()
-   {
-      HihgliteObject.SetActive(true);
+      if (cardController.Card.IsSpell)
+      {
+         Attack.gameObject.SetActive(false);
+         Health.gameObject.SetActive(false);
+      }
+      
+      RefreshData();
    }
    
-   public void HighliteOff()
+   //Обновить prefab карты
+   public void RefreshData()
    {
-      HihgliteObject.SetActive(false);
+      Attack.text = cardController.Card.Attack.ToString();
+      Health.text = cardController.Card.Health.ToString();
+      ManaCost.text = cardController.Card.ManaCost.ToString(); 
    }
-
-   public void CheckForAvailability(int currentMana)
+   //подсветка карты на то можно ли её использовать на поле
+   public void HighlightCard(bool isHighlight)
    {
-      GetComponent<CanvasGroup>().alpha = currentMana >= SelfCard.ManaCost ? 1 : .5f;
+      HihgliteObject.SetActive(isHighlight);
    }
-
+   //подстветка на то что не хватает маны
+   public void HighlightManaAvailability(int currentMana)
+   {
+      GetComponent<CanvasGroup>().alpha = currentMana >= cardController.Card.ManaCost ? 1 : .5f;
+   }
+   //подстветка цели для карты на столе
    public void HighlightAsTarget(bool highlight)
    {
       GetComponent<Image>().color = highlight ? TargetCol : NormalCol;
+   }
+   //подстветка цели для заклинания
+   public void HighlightAsSpellTarget(bool highlight)
+   {
+      GetComponent<Image>().color = highlight ? SpellTargetColor : NormalCol;
    }
 }

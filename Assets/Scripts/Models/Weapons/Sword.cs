@@ -1,19 +1,15 @@
-﻿using Assets.Scripts.Models.Enums;
-using Assets.Scripts.Models.Interface;
+﻿using Assets.Scripts.Models.Interface;
 
-namespace Assets.Scripts.Models.Weapons
+namespace Models.Weapons
 {
     public class Sword : IWeapon
     {
         private int Durability;
         public int Damage { get; }
-        public Status Effect { get; }
-        public Sword(int durability, int damage, Status status)
+        public Sword(int durability, int damage)
         {
             Durability = durability;
             Damage = damage;
-            Effect = status;
-
         }
         public int getDurability()
         {
