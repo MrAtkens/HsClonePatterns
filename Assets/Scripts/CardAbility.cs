@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Decorator;
 using Models.Enums;
 using UnityEngine;
 
@@ -9,19 +10,19 @@ public class CardAbility : MonoBehaviour
 
     public void OnCast()
     {
-        foreach (var ability in cardController.Card.Abilities)
+        foreach (var ability in cardController.Card.GetAbility())
         {
             switch (ability)
             {
-                case AbilityType.INSTANT_ACTIVE:
+                case (int)AbilityType.INSTANT_ACTIVE:
                     cardController.Card.CanAttack = true;
                     if(cardController.isPlayerCard)
                         cardController.Info.HighlightCard(true);
                     break;
-                case AbilityType.SHIELD:
+                case (int)AbilityType.SHIELD:
                     Shield.SetActive(true);
                     break;
-                case AbilityType.PROVOCATION:
+                case (int)AbilityType.PROVOCATION:
                     Provocation.SetActive(true);
                     break;
             }
@@ -30,11 +31,11 @@ public class CardAbility : MonoBehaviour
 
     public void OnDamageDeal()
     {
-        foreach (var ability in cardController.Card.Abilities)
+        foreach (var ability in cardController.Card.GetAbility())
         {
             switch (ability)
             {
-                case AbilityType.DOUBLE_ATTACK:
+                case (int)AbilityType.DOUBLE_ATTACK:
                     if (cardController.Card.TimesDealDamage == 1)
                     {
                         cardController.Card.CanAttack = true;
@@ -49,14 +50,14 @@ public class CardAbility : MonoBehaviour
     public void OnTookDamage(CardController attacker = null)
     {
         Shield.SetActive(false);
-        foreach (var ability in cardController.Card.Abilities)
+        foreach (var ability in cardController.Card.GetAbility())
         {
             switch (ability)
             {
-                case AbilityType.SHIELD:
+                case (int)AbilityType.SHIELD:
                     Shield.SetActive(true);
                     break;
-                case AbilityType.COUNTER_ATTACK:
+                case (int)AbilityType.COUNTER_ATTACK:
                     if(attacker != null)
                         attacker.Card.GetDamage(cardController.Card.GetAttackForDamage());
                     break;
@@ -67,12 +68,12 @@ public class CardAbility : MonoBehaviour
     public void OnNewTurn()
     {
         cardController.Card.TimesDealDamage = 0;
-        foreach (var ability in cardController.Card.Abilities)
+        foreach (var ability in cardController.Card.GetAbility())
         {
             switch (ability)
             {
-                case AbilityType.REGENERATION_EACH_TURN:
-                    cardController.Card.Health += 2;
+                case (int)AbilityType.REGENERATION_EACH_TURN:
+                    cardController.Card.SetStat(new SpellEffect(cardController.Card.GetStat(StatType.HEALTH), SpellEffectType.ADD, 2).GetEffect());
                     cardController.Info.RefreshData();
                     break;
             }

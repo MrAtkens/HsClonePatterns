@@ -16,7 +16,7 @@ public class AI : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         int count = cards.Count == 1 ? 1 :
-                    Random.Range(0, cards.Count);
+            Random.Range(0, cards.Count);
 
         for (int i = 0; i < count; i++)
         {
@@ -26,24 +26,24 @@ public class AI : MonoBehaviour
                 GameManager.Instance.EnemyHandCards.Count == 0)
                 break;
 
-            List<CardController> cardsList = cards.FindAll(x => GameManager.Instance.Enemy.GetMana() >= x.Card.ManaCost);
+            List<CardController> cardsList = cards.FindAll(x => GameManager.Instance.Enemy.GetMana() >= x.Card.ManaCost.Value);
 
             if (cardsList.Count == 0)
                 break;
 
             //Использование заклинаний
-            if (cardsList[0].Card.IsSpell)
+            if (cardsList[i].Card.IsSpell())
             {
-                CastSpell(cardsList[0]);
+                CastSpell(cardsList[i]);
                 yield return new WaitForSeconds(.51f);
             }
             else
             {
                 //Выставление карт на стол
-                cardsList[0].GetComponent<CardMovement>().MoveToField(GameManager.Instance.EnemyField);
+                cardsList[i].GetComponent<CardMovement>().MoveToField(GameManager.Instance.EnemyField);
                 yield return new WaitForSeconds(.51f);
-                cardsList[0].transform.SetParent(GameManager.Instance.EnemyField);
-                cardsList[0].OnCast();
+                cardsList[i].transform.SetParent(GameManager.Instance.EnemyField);
+                cardsList[i].OnCast();
             }
         }
 
@@ -53,16 +53,15 @@ public class AI : MonoBehaviour
         while (GameManager.Instance.EnemyFieldCards.Exists(x => x.Card.CanAttack))
         {
             var activeCard = GameManager.Instance.EnemyFieldCards.FindAll(x => x.Card.CanAttack)[0];
-            bool hasProvocation = GameManager.Instance.PlayerFieldCards.Exists(x => x.Card.IsProvocation);
+            bool hasProvocation = GameManager.Instance.PlayerFieldCards.Exists(x => x.IsProvocation());
             // Если есть провокация бъём именно эту карту 
             if (hasProvocation ||
                 Random.Range(0, 2) == 0 &&
                 GameManager.Instance.PlayerFieldCards.Count > 0)
             {
                 CardController enemy;
-
                 if (hasProvocation)
-                    enemy = GameManager.Instance.PlayerFieldCards.Find(x => x.Card.IsProvocation);
+                    enemy = GameManager.Instance.PlayerFieldCards.Find(x => x.IsProvocation());
                 else
                     enemy = GameManager.Instance.PlayerFieldCards[Random.Range(0, GameManager.Instance.PlayerFieldCards.Count)];
                 
@@ -90,38 +89,38 @@ public class AI : MonoBehaviour
     void CastSpell(CardController card)
     {
         //Работа заклинаний на ходу противника
-        switch (((SpellCard)card.Card).SpellTarget)
+        switch (card.Card.GetTargetType())
         {
-            case TargetType.NO_TARGET:
+            case (int)TargetType.NO_TARGET:
 
-                switch (((SpellCard)card.Card).Spell)
+                switch (card.Card.GetAbility()[0])
                 {
-                    case SpellType.HEAL_ALLY_FIELD_CARDS:
+                    case (int)SpellType.HEAL_ALLY_FIELD_CARDS:
 
                         if (GameManager.Instance.EnemyFieldCards.Count > 0)
                             StartCoroutine(CastCard(card));
 
                         break;
 
-                    case SpellType.DAMAGE_ENEMY_FIELD_CARDS:
+                    case (int)SpellType.DAMAGE_ENEMY_FIELD_CARDS:
 
                         if (GameManager.Instance.PlayerFieldCards.Count > 0)
                             StartCoroutine(CastCard(card));
 
                         break;
 
-                    case SpellType.HEAL_ALLY_HERO:
+                    case (int)SpellType.HEAL_ALLY_HERO:
                         StartCoroutine(CastCard(card));
                         break;
 
-                    case SpellType.DAMAGE_ENEMY_HERO:
+                    case (int)SpellType.DAMAGE_ENEMY_HERO:
                         StartCoroutine(CastCard(card));
                         break;
                 }
 
                 break;
 
-            case TargetType.ALLY_CARD_TARGET:
+            case (int)TargetType.ALLY_CARD_TARGET:
 
                 if (GameManager.Instance.EnemyFieldCards.Count > 0)
                     StartCoroutine(CastCard(card,
@@ -129,7 +128,7 @@ public class AI : MonoBehaviour
 
                 break;
 
-            case TargetType.ENEMY_CARD_TARGET:
+            case (int)TargetType.ENEMY_CARD_TARGET:
 
                 if (GameManager.Instance.PlayerFieldCards.Count > 0)
                     StartCoroutine(CastCard(card,
@@ -142,8 +141,7 @@ public class AI : MonoBehaviour
     //Способности при выставлений карты на стол
     IEnumerator CastCard(CardController spell, CardController target = null)
     {
-        //Заклинания
-        if (((SpellCard)spell.Card).SpellTarget == TargetType.NO_TARGET)
+        if (spell.Card.GetTargetType() == (int) TargetType.NO_TARGET)
         {
             spell.GetComponent<CardMovement>().MoveToField(GameManager.Instance.EnemyField);
             yield return new WaitForSeconds(.51f);
@@ -152,19 +150,20 @@ public class AI : MonoBehaviour
         }
         else
         {
-            //Показать карту игроку
             spell.Info.ShowCardInfo();
             spell.GetComponent<CardMovement>().MoveToTarget(target.transform);
             yield return new WaitForSeconds(.51f);
 
-            //Удаляем из руки противника и добавляем в поле противника, также отнимаем ману и противника
             GameManager.Instance.EnemyHandCards.Remove(spell);
             GameManager.Instance.EnemyFieldCards.Add(spell);
-            GameManager.Instance.Enemy.ReduceMana(spell.Card.ManaCost);
+            GameManager.Instance.Enemy.ReduceMana(spell.Card.ManaCost.Value);
 
             spell.Card.IsPlaced = true;
-            //Юзаем заклинания
+
             spell.UseSpell(target);
         }
+
+        string targetStr = target == null ? "no_target" : target.Card.Name;
+        Debug.Log("AI spell cast: " + (spell.Card).Name + " target: " + targetStr);
     }
 }

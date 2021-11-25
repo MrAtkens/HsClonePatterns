@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using Models;
 using Models.Enums;
 using Models.Observer;
+using Models.Patterns.Facade;
 using Models.Weapons;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using Random = UnityEngine.Random;
-
 public class Game
 {
-    public List<Card> EnemyDeck, PlayerDeck;
-
+    public List<AbstractCard> EnemyDeck, PlayerDeck;
+    
     public Game()
     {
         EnemyDeck = GiveDeckCard();
@@ -20,20 +17,16 @@ public class Game
 
     }
     // Инициализация карт в колодах
-    List<Card> GiveDeckCard()
+    List<AbstractCard> GiveDeckCard()
     {
-        List<Card> list = new List<Card>();
-
+        List<AbstractCard> list = new List<AbstractCard>();
         list.Add(CardManager.AllCards[6].GetCardCopy());
 
-        for (int i = 0; i < 20; i++)
+        var sequence = GameManager.Instance.RandomApi.GetSequenceForDeck(0, 20);
+        foreach (var number in sequence)
         {
-            var card = CardManager.AllCards[Random.Range(0, CardManager.AllCards.Count)];
-
-            if (card.IsSpell)
-                list.Add(((SpellCard)card).GetCardCopy());
-            else
-                list.Add(card.GetCardCopy());
+            var card = CardManager.AllCards[number];
+            list.Add(card.GetCardCopy());
         }
         return list;
     }
@@ -50,7 +43,8 @@ public class GameManager : MonoBehaviour
 
     public Player Player, Enemy;
     public AI EnemyAI;
-    
+    public readonly RandomApiFacade RandomApi = new RandomApiFacade();
+
     public List<CardController> PlayerHandCards = new List<CardController>(),
                           PlayerFieldCards = new List<CardController>(),
                           EnemyHandCards = new List<CardController>(),
@@ -61,7 +55,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
             Instance = this;
     }
     
@@ -98,6 +92,8 @@ public class GameManager : MonoBehaviour
         //Выдача карт
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
+        Instance.Player.RestoreManaPool();
+        Instance.Enemy.RestoreManaPool();
         Instance.Player.RestoreMana();
         Instance.Enemy.RestoreMana();
         Instance.Player.HealthRestore();
@@ -118,7 +114,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CreateCardPref(Card card, Transform hand)
+    private void CreateCardPref(AbstractCard card, Transform hand)
     {
         var cardGameObject = Instantiate(CardPref, hand, false);
         var cardC = cardGameObject.GetComponent<CardController>();
@@ -130,14 +126,14 @@ public class GameManager : MonoBehaviour
     }
     
     //Выдача карт в начале игры
-    private void GiveHandCards(List<Card> deck, Transform hand)
+    private void GiveHandCards(List<AbstractCard> deck, Transform hand)
     {
         int i = 0;
         while(i++ < 4)
             GiveCardToHand(deck, hand);
     }
     //Простая выдача карт в каждый ход
-    private void GiveCardToHand(List<Card> deck, Transform hand)
+    private void GiveCardToHand(List<AbstractCard> deck, Transform hand)
     {
         if (deck.Count == 0)
             return;
@@ -150,8 +146,10 @@ public class GameManager : MonoBehaviour
     // Выдача карт на новом ходе
     private void GiveNewCards()
     {
-        GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
-        GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
+        if(EnemyHandCards.Count < 6)
+            GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
+        if(PlayerHandCards.Count < 6)
+            GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
 
     //Подсветка противника
@@ -159,12 +157,12 @@ public class GameManager : MonoBehaviour
     {
         var targets = new List<CardController>();
 
-        if (attacker.Card.IsSpell)
+        if (attacker.Card.IsSpell())
         {
-            var spellTarget = (SpellCard) attacker.Card;
-            if (spellTarget.SpellTarget == TargetType.NO_TARGET)
+            var spellTarget = attacker.Card;
+            if (spellTarget.GetTargetType() == (int)TargetType.NO_TARGET)
                 targets = new List<CardController>();
-            else if (spellTarget.SpellTarget == TargetType.ALLY_CARD_TARGET)
+            else if (spellTarget.GetTargetType() == (int)TargetType.ALLY_CARD_TARGET)
                 targets = PlayerFieldCards;
             else
                 targets = EnemyFieldCards;
@@ -172,8 +170,8 @@ public class GameManager : MonoBehaviour
         else
         {
             //Подсветка если есть провокаций 
-            if (EnemyFieldCards.Exists(x => x.Card.IsProvocation))
-                targets = EnemyFieldCards.FindAll(x => x.Card.IsProvocation);
+            if (EnemyFieldCards.Exists(x => x.IsProvocation()))
+                targets = EnemyFieldCards.FindAll(x => x.IsProvocation());
             else
             {
                 targets = EnemyFieldCards;
@@ -183,7 +181,7 @@ public class GameManager : MonoBehaviour
 
         foreach (var card in targets)
         {
-            if(attacker.Card.IsSpell)
+            if(attacker.Card.IsSpell())
                 card.Info.HighlightAsSpellTarget(highlight);
             else
                 card.Info.HighlightAsTarget(highlight);
@@ -305,8 +303,8 @@ public class GameManager : MonoBehaviour
     private void GetWeapon(CardController card)
     {
         var random = Random.Range(0, 100);
-        Debug.Log("Durability " + card.Card.GetDurability());
-        if (card.Card.GetDurability() == 0)
+        Debug.Log("Durability " + card.Card.GetWeapon().GetDurability());
+        if (card.Card.GetWeapon().GetDurability() == 0)
         {
             Debug.Log("Random " + random);
             if(random < 25)
@@ -318,7 +316,7 @@ public class GameManager : MonoBehaviour
             else if (random > 75)
                 card.Card.SetWeapon(new Arm());
             card.Info.RefreshData();
-            Debug.Log(card.Card.GetWeaponDamage());
+            Debug.Log(card.Card.GetWeapon().GetWeaponDamage());
         }
     }
 }

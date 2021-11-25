@@ -2,8 +2,8 @@
 {
     public enum TargetType
     {
-        NO_TARGET,
-        ALLY_CARD_TARGET,
-        ENEMY_CARD_TARGET
+        NO_TARGET = 0,
+        ALLY_CARD_TARGET = 1,
+        ENEMY_CARD_TARGET = 2
     }
 }

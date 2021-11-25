@@ -20,59 +20,78 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d8c1bac-da35-4850-8693-b4a8b7006986" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AI.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AI.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CardController.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/HeroType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/HeroType.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObservable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObservable.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObserver.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObserver.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/PlayerBar.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/PlayerBar.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UIController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UIController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Creature.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellEffectType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellEffectType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/StatType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/StatType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Decorator.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Decorator/SpellEffect.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Decorator/SpellEffect.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomApiFacade.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomApiFacade.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberSequence.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberSequence.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/Creator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/Creator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/CreatureCreator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/CreatureCreator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/SpellCreator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/SpellCreator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Stat.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Stat.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HsClonePatterns/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/CardPref.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/CardPref.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Attack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Attack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AttackHero.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AttackHero.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Creatures.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Creatures/CreatureCard.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Creatures/CreatureCard.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/Status.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/Status.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Creature.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObservable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/IObservable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObservable.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/IObservable.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/IObserver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IObserver.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/IObserver.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/IWeapon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IWeapon.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/IWeapon.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Observer.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/Player.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/PlayerBar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/PlayerBar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Observer/PlayerBar.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Observer/PlayerBar.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/AbstractWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/AbstractWeapon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/AbstractWeapon.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/AbstractWeapon.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Arm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Arm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Arm.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Arm.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Axe.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Axe.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Axe.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Axe.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Mace.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Mace.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Mace.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Mace.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Sword.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/Sword.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/WeaponIcons.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/WeaponIcons.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/WeaponIcons.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Strategy/WeaponIcons.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +100,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/DropPlaceScr.cs" root0="SKIP_HIGHLIGHTING" />
@@ -92,8 +112,8 @@
     <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/CardInfoScr.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/CardManagerScr.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/CollectibleCardGameOnUnity-master/CCG/Assets/Scripts/GameManagerScr.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/OneDrive/Изображения/CardMovementScr.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/OneDrive/Изображения/CardMovementScr.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -102,29 +122,46 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CardManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardManagerInit.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardLogic.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Attack.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AttackHero.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/ICard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/AbstractClass.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UIController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Interface/IStat.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellEffect.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Interface/ICard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FieldLogic.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/AbilityType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/SpellType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/TargetType.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/Sword.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/ICard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Stat.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/StatType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardAbility.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Attack.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Weapons/AbstractWeapon.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Decorator/SpellEffect.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Enums/CardType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/Creator.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/AbstractClass.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SpellTarget.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/CreatureCreator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/FactoryMethod/SpellCreator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardManagerSrc.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/UIController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardInfo.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CardMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Models/Observer/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Creature.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomApiFacde.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomOptions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomApiFacade.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberSequence.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Patterns/FactoryMethod/Creator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/SpellCard.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/AbstractCard.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Card.cs" />
       </list>
     </option>
   </component>
@@ -149,23 +186,24 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor &amp; Play">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="28444">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="28444" />
       <option name="selectedOptions">
         <set />
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3328">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="3328" />
       <option name="selectedOptions">
         <set />
       </option>
@@ -189,6 +227,9 @@
       <workItem from="1636801028021" duration="11197000" />
       <workItem from="1636962630555" duration="20748000" />
       <workItem from="1637031558902" duration="2191000" />
+      <workItem from="1637819475912" duration="11441000" />
+      <workItem from="1637833871845" duration="7257000" />
+      <workItem from="1637852328821" duration="13764000" />
     </task>
     <servers />
   </component>
@@ -214,22 +255,78 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="372" key="GridCell.Tab.0.bottom" timestamp="1636486792854">
+    <state width="1877" height="372" key="GridCell.Tab.0.bottom" timestamp="1637866950356">
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.bottom/0.46.1920.1034@0.46.1920.1034" timestamp="1636486792854" />
-    <state width="1877" height="372" key="GridCell.Tab.0.center" timestamp="1636486792854">
+    <state width="1877" height="372" key="GridCell.Tab.0.bottom/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950356" />
+    <state width="1877" height="372" key="GridCell.Tab.0.center" timestamp="1637866950356">
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.center/0.46.1920.1034@0.46.1920.1034" timestamp="1636486792854" />
-    <state width="1877" height="372" key="GridCell.Tab.0.left" timestamp="1636486792853">
+    <state width="1877" height="372" key="GridCell.Tab.0.center/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950356" />
+    <state width="1877" height="372" key="GridCell.Tab.0.left" timestamp="1637866950355">
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.left/0.46.1920.1034@0.46.1920.1034" timestamp="1636486792853" />
-    <state width="1877" height="372" key="GridCell.Tab.0.right" timestamp="1636486792854">
+    <state width="1877" height="372" key="GridCell.Tab.0.left/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950355" />
+    <state width="1877" height="372" key="GridCell.Tab.0.right" timestamp="1637866950356">
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
-    <state width="1877" height="372" key="GridCell.Tab.0.right/0.46.1920.1034@0.46.1920.1034" timestamp="1636486792854" />
+    <state width="1877" height="372" key="GridCell.Tab.0.right/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950356" />
+    <state width="1877" height="372" key="GridCell.Tab.1.bottom" timestamp="1637866976621">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.1.bottom/0.46.1920.1034@0.46.1920.1034" timestamp="1637866976621" />
+    <state width="1877" height="372" key="GridCell.Tab.1.center" timestamp="1637866976621">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.1.center/0.46.1920.1034@0.46.1920.1034" timestamp="1637866976621" />
+    <state width="1877" height="372" key="GridCell.Tab.1.left" timestamp="1637866976620">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.1.left/0.46.1920.1034@0.46.1920.1034" timestamp="1637866976620" />
+    <state width="1877" height="372" key="GridCell.Tab.1.right" timestamp="1637866976621">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.1.right/0.46.1920.1034@0.46.1920.1034" timestamp="1637866976621" />
+    <state width="1877" height="372" key="GridCell.Tab.2.bottom" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.2.bottom/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state width="1877" height="372" key="GridCell.Tab.2.center" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.2.center/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state width="1877" height="372" key="GridCell.Tab.2.left" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.2.left/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state width="1877" height="372" key="GridCell.Tab.2.right" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.2.right/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state width="1877" height="372" key="GridCell.Tab.3.bottom" timestamp="1637866950246">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.3.bottom/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950246" />
+    <state width="1877" height="372" key="GridCell.Tab.3.center" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.3.center/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state width="1877" height="372" key="GridCell.Tab.3.left" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.3.left/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state width="1877" height="372" key="GridCell.Tab.3.right" timestamp="1637866950245">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state width="1877" height="372" key="GridCell.Tab.3.right/0.46.1920.1034@0.46.1920.1034" timestamp="1637866950245" />
+    <state x="794" y="264" key="RiderGenerateDialog" timestamp="1637826112725">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state x="794" y="264" key="RiderGenerateDialog/0.46.1920.1034@0.46.1920.1034" timestamp="1637826112725" />
+    <state x="776" y="284" key="RollbackChangesDialog" timestamp="1637783429557">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state x="776" y="284" key="RollbackChangesDialog/0.46.1920.1034@0.46.1920.1034" timestamp="1637783429557" />
     <state x="461" y="208" key="SettingsEditor" timestamp="1636391657686">
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
@@ -238,9 +335,396 @@
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
     <state x="92" y="138" width="1736" height="850" key="VCS.FileHistoryDialog/0.46.1920.1034@0.46.1920.1034" timestamp="1636394617480" />
-    <state x="623" y="269" width="672" height="678" key="search.everywhere.popup" timestamp="1636485800841">
+    <state x="616" y="262" key="run.anything.popup" timestamp="1637864529054">
       <screen x="0" y="46" width="1920" height="1034" />
     </state>
-    <state x="623" y="269" width="672" height="678" key="search.everywhere.popup/0.46.1920.1034@0.46.1920.1034" timestamp="1636485800841" />
+    <state x="616" y="262" key="run.anything.popup/0.46.1920.1034@0.46.1920.1034" timestamp="1637864529054" />
+    <state x="623" y="269" width="672" height="678" key="search.everywhere.popup" timestamp="1637855345954">
+      <screen x="0" y="46" width="1920" height="1034" />
+    </state>
+    <state x="623" y="269" width="672" height="678" key="search.everywhere.popup/0.46.1920.1034@0.46.1920.1034" timestamp="1637855345954" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>10</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="10">
+            <startOffsets>
+              <option value="203" />
+            </startOffsets>
+            <endOffsets>
+              <option value="218" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>11</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="11">
+            <startOffsets>
+              <option value="231" />
+            </startOffsets>
+            <endOffsets>
+              <option value="267" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>12</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="12">
+            <startOffsets>
+              <option value="280" />
+            </startOffsets>
+            <endOffsets>
+              <option value="426" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>16</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="15">
+            <startOffsets>
+              <option value="504" />
+            </startOffsets>
+            <endOffsets>
+              <option value="543" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>14</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="14">
+            <startOffsets>
+              <option value="440" />
+            </startOffsets>
+            <endOffsets>
+              <option value="473" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>17</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="18">
+            <startOffsets>
+              <option value="560" />
+            </startOffsets>
+            <endOffsets>
+              <option value="624" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>18</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="20">
+            <startOffsets>
+              <option value="641" />
+            </startOffsets>
+            <endOffsets>
+              <option value="676" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomNumberApi.cs</url>
+          <line>20</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomNumberApi.cs" initialLine="21">
+            <startOffsets>
+              <option value="703" />
+            </startOffsets>
+            <endOffsets>
+              <option value="717" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Models/Patterns/Facade/RandomApiFacade.cs</url>
+          <line>17</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\Models\Patterns\Facade\RandomApiFacade.cs" initialLine="19">
+            <startOffsets>
+              <option value="480" />
+            </startOffsets>
+            <endOffsets>
+              <option value="527" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>17</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="17">
+            <startOffsets>
+              <option value="373" />
+            </startOffsets>
+            <endOffsets>
+              <option value="457" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>20</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="20">
+            <startOffsets>
+              <option value="467" />
+            </startOffsets>
+            <endOffsets>
+              <option value="498" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>23</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="23">
+            <startOffsets>
+              <option value="574" />
+            </startOffsets>
+            <endOffsets>
+              <option value="752" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>30</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="30">
+            <startOffsets>
+              <option value="918" />
+            </startOffsets>
+            <endOffsets>
+              <option value="943" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>28</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="28">
+            <startOffsets>
+              <option value="789" />
+            </startOffsets>
+            <endOffsets>
+              <option value="904" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>34</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="34">
+            <startOffsets>
+              <option value="1019" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1051" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>37</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="37">
+            <startOffsets>
+              <option value="1123" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1161" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>36</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="36">
+            <startOffsets>
+              <option value="1082" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1106" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>42</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="42">
+            <startOffsets>
+              <option value="1266" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1353" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>44</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="44">
+            <startOffsets>
+              <option value="1425" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1491" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>43</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="43">
+            <startOffsets>
+              <option value="1370" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1408" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>45</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="45">
+            <startOffsets>
+              <option value="1508" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1530" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>50</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="50">
+            <startOffsets>
+              <option value="1598" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1633" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>52</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="52">
+            <startOffsets>
+              <option value="1643" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1717" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>54</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="54">
+            <startOffsets>
+              <option value="1740" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1828" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>55</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="55">
+            <startOffsets>
+              <option value="1841" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1932" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>57</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="57">
+            <startOffsets>
+              <option value="2004" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2161" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>75</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="75">
+            <startOffsets>
+              <option value="2801" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2893" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>76</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="76">
+            <startOffsets>
+              <option value="2910" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2948" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/AI.cs</url>
+          <line>78</line>
+          <properties documentPath="G:\Unity\HsClonePatterns\Assets\Scripts\AI.cs" initialLine="78">
+            <startOffsets>
+              <option value="2966" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3017" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

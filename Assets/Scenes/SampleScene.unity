@@ -412,6 +412,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -516,10 +517,23 @@ MonoBehaviour:
   Player: {fileID: 874983008}
   Enemy: {fileID: 714505161}
   EnemyAI: {fileID: 714505160}
+  RandomApi: {fileID: 519420034}
   PlayerHandCards: []
   PlayerFieldCards: []
   EnemyHandCards: []
   EnemyFieldCards: []
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b814fee8cf64e8abb39acc42750a84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &548934934
 GameObject:
   m_ObjectHideFlags: 0

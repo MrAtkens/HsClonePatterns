@@ -48,27 +48,48 @@
           <e p="GameManager.cs" t="Include" />
           <e p="Models" t="Include">
             <e p="AbstractCard.cs" t="Include" />
-            <e p="Card.cs" t="Include" />
+            <e p="Creature.cs" t="Include" />
             <e p="Enums" t="Include">
               <e p="AbilityType.cs" t="Include" />
+              <e p="CardType.cs" t="Include" />
               <e p="HeroType.cs" t="Include" />
+              <e p="SpellEffectType.cs" t="Include" />
               <e p="SpellType.cs" t="Include" />
+              <e p="StatType.cs" t="Include" />
               <e p="TargetType.cs" t="Include" />
             </e>
-            <e p="Interface" t="Include">
-              <e p="IObservable.cs" t="Include" />
-              <e p="IObserver.cs" t="Include" />
-              <e p="IWeapon.cs" t="Include" />
-            </e>
-            <e p="Observer" t="Include">
-              <e p="Player.cs" t="Include" />
-              <e p="PlayerBar.cs" t="Include" />
+            <e p="Patterns" t="Include">
+              <e p="Decorator" t="Include">
+                <e p="SpellEffect.cs" t="Include" />
+              </e>
+              <e p="Facade" t="Include">
+                <e p="RandomApiFacade.cs" t="Include" />
+                <e p="RandomNumberApi.cs" t="Include" />
+                <e p="RandomNumberSequence.cs" t="Include" />
+              </e>
+              <e p="FactoryMethod" t="Include">
+                <e p="Creator.cs" t="Include" />
+                <e p="CreatureCreator.cs" t="Include" />
+                <e p="SpellCreator.cs" t="Include" />
+              </e>
+              <e p="Observer" t="Include">
+                <e p="IObservable.cs" t="Include" />
+                <e p="IObserver.cs" t="Include" />
+                <e p="Player.cs" t="Include" />
+                <e p="PlayerBar.cs" t="Include" />
+              </e>
+              <e p="Strategy" t="Include">
+                <e p="AbstractWeapon.cs" t="Include" />
+                <e p="Arm.cs" t="Include" />
+                <e p="Axe.cs" t="Include" />
+                <e p="IWeapon.cs" t="Include" />
+                <e p="Mace.cs" t="Include" />
+                <e p="Sword.cs" t="Include" />
+                <e p="WeaponIcons.cs" t="Include" />
+              </e>
             </e>
             <e p="SpellCard.cs" t="Include" />
-            <e p="Weapons" t="Include">
-              <e p="Axe.cs" t="Include" />
-              <e p="Sword.cs" t="Include" />
-            </e>
+            <e p="Stat.cs" t="Include" />
           </e>
           <e p="SpellTarget.cs" t="Include" />
           <e p="UIController.cs" t="Include" />

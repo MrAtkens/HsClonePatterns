@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Models;
+using Models.Decorator;
 using Models.Enums;
 using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
-    public Card Card;
+    public AbstractCard Card;
     public bool isPlayerCard;
     public CardInfo Info;
     public CardMovement Movement;
@@ -13,7 +14,7 @@ public class CardController : MonoBehaviour
 
     private GameManager gameManager;
 
-    public void Init(Card card, bool isPlayer)
+    public void Init(AbstractCard card, bool isPlayer)
     {
         Card = card;
         gameManager = GameManager.Instance;
@@ -25,35 +26,35 @@ public class CardController : MonoBehaviour
             GetComponent<Attack>().enabled = false;
         }
         else
-            Info.HideCardInfo();
+            Info.ShowCardInfo();
     }
 
     public void OnCast()
     {
-        if (Card.IsSpell && ((SpellCard)Card).SpellTarget != TargetType.NO_TARGET)
+        if (Card.IsSpell() && Card.GetTargetType() != (int)TargetType.NO_TARGET)
             return;
         
         if (isPlayerCard)
         {
             gameManager.PlayerHandCards.Remove(this);
             gameManager.PlayerFieldCards.Add(this);
-            gameManager.Player.ReduceMana(Card.ManaCost);
+            gameManager.Player.ReduceMana(Card.ManaCost.Value);
             gameManager.CheckCardsForManaAvailability();
         }
         else
         {
             gameManager.EnemyHandCards.Remove(this);
             gameManager.EnemyFieldCards.Add(this);
-            gameManager.Enemy.ReduceMana(Card.ManaCost);
+            gameManager.Enemy.ReduceMana(Card.ManaCost.Value);
             Info.ShowCardInfo();
         }
 
         Card.IsPlaced = true;
         
-        if(Card.HasAbility)
+        if(Card.HasAbility())
             Ability.OnCast();
         
-        if(Card.IsSpell)
+        if(Card.IsSpell())
             UseSpell(null);
     }
 
@@ -69,62 +70,65 @@ public class CardController : MonoBehaviour
         Card.CanAttack = false;
         Info.HighlightCard(false);
         
-        if(Card.HasAbility)
+        if(Card.HasAbility())
             Ability.OnDamageDeal();
     }
 
     public void UseSpell(CardController target)
     {
-        var spellCard = (SpellCard)Card;
-        switch (spellCard.Spell)
+        var spellCard = Card;
+        switch (spellCard.GetAbility()[0])
         {
-            case SpellType.HEAL_ALLY_FIELD_CARDS:
+            case (int)SpellType.HEAL_ALLY_FIELD_CARDS:
                 var allyCards = isPlayerCard ? gameManager.PlayerFieldCards : gameManager.EnemyFieldCards;
                 foreach (var card in allyCards)
                 {
-                    card.Card.Health += spellCard.SpellValue;
+                    card.Card.SetStat(new SpellEffect(card.Card.GetStat(StatType.HEALTH), SpellEffectType.ADD,
+                        spellCard.GetStat(StatType.SPELL_VALUE).Value).GetEffect());
                     card.Info.RefreshData();
                 }
                 break;
-            case SpellType.DAMAGE_ENEMY_FIELD_CARDS:
+            case (int)SpellType.DAMAGE_ENEMY_FIELD_CARDS:
                 var enemyCards = isPlayerCard
                     ? new List<CardController>(gameManager.EnemyFieldCards)
                     : new List<CardController>(gameManager.PlayerFieldCards);
                 foreach (var card in enemyCards)
-                    GiveDamageTo(card, spellCard.SpellValue);
+                    GiveDamageTo(card, spellCard.GetStat(StatType.SPELL_VALUE).Value);
                 break;
-            case SpellType.HEAL_ALLY_HERO:
+            case (int)SpellType.HEAL_ALLY_HERO:
                 
                 if(isPlayerCard)
-                    gameManager.Player.Heal(spellCard.SpellValue);
+                    gameManager.Player.Heal(spellCard.GetStat(StatType.SPELL_VALUE).Value);
                 else 
-                    gameManager.Enemy.Heal(spellCard.SpellValue);
+                    gameManager.Enemy.Heal(spellCard.GetStat(StatType.SPELL_VALUE).Value);
                 break;
-            case SpellType.DAMAGE_ENEMY_HERO:
+            case (int)SpellType.DAMAGE_ENEMY_HERO:
                 if(isPlayerCard)
-                    gameManager.Enemy.ApplyDamage(spellCard.SpellValue);
+                    gameManager.Enemy.ApplyDamage(spellCard.GetStat(StatType.SPELL_VALUE).Value);
                 else 
-                    gameManager.Player.ApplyDamage(spellCard.SpellValue);
+                    gameManager.Player.ApplyDamage(spellCard.GetStat(StatType.SPELL_VALUE).Value);
                 break;
-            case SpellType.HEAL_ALLY_CARD:
-                target.Card.Health += spellCard.SpellValue;
+            case (int)SpellType.HEAL_ALLY_CARD:
+                target.Card.SetStat(new SpellEffect(target.Card.GetStat(StatType.HEALTH), SpellEffectType.ADD,
+                    spellCard.GetStat(StatType.SPELL_VALUE).Value).GetEffect());
                 break;
-            case SpellType.DAMAGE_ENEMY_CARD:
-                GiveDamageTo(target, spellCard.SpellValue);
+            case (int)SpellType.DAMAGE_ENEMY_CARD:
+                GiveDamageTo(target, spellCard.GetStat(StatType.SPELL_VALUE).Value);
                 break;
-            case SpellType.SHIELD_ON_ALLY_CARD:
-                if(!target.Card.Abilities.Exists(x => x == AbilityType.SHIELD))
-                    target.Card.Abilities.Add(AbilityType.SHIELD);
+            case (int)SpellType.SHIELD_ON_ALLY_CARD:
+                if(!target.Card.GetAbility().Exists(x => x == (int)AbilityType.SHIELD))
+                    target.Card.AddAbility((int)AbilityType.SHIELD);
                 break;
-            case SpellType.PROVOCATION_ON_ALLY_CARD:
-                if(!target.Card.Abilities.Exists(x => x == AbilityType.PROVOCATION))
-                    target.Card.Abilities.Add(AbilityType.PROVOCATION);
+            case (int)SpellType.PROVOCATION_ON_ALLY_CARD:
+                if(!target.Card.GetAbility().Exists(x => x == (int)AbilityType.PROVOCATION))
+                    target.Card.AddAbility((int)AbilityType.PROVOCATION);
                 break;
-            case SpellType.BUFF_CARD_DAMAGE:
-                target.Card.Attack += spellCard.SpellValue;
+            case (int)SpellType.BUFF_CARD_DAMAGE:
+                target.Card.SetStat(new SpellEffect(target.Card.GetStat(StatType.ATTACK), SpellEffectType.ADD,
+                    spellCard.GetStat(StatType.SPELL_VALUE).Value).GetEffect());
                 break;
-            case SpellType.DEBUFF_CARD_DAMAGE:
-                target.Card.Attack = Mathf.Clamp(target.Card.Attack - spellCard.SpellValue, 0, int.MaxValue);
+            case (int)SpellType.DEBUFF_CARD_DAMAGE:
+                target.Card.SetStat(new SpellEffect(target.Card.GetStat(StatType.ATTACK), SpellEffectType.SUBSTRACT, spellCard.GetStat(StatType.SPELL_VALUE).Value).GetEffect());
                 break;
         }
 
@@ -146,7 +150,8 @@ public class CardController : MonoBehaviour
 
     public void CheckForAlive()
     {
-        if(Card.IsAlive)
+        //Is Alive
+        if(Card.GetStat(StatType.HEALTH).Value != 0)
             Info.RefreshData(); 
         else 
             DestroyCard();
@@ -165,10 +170,16 @@ public class CardController : MonoBehaviour
         // Уничтожаем игровой объект в Unity
         Destroy(gameObject);
     }
+
+    public bool IsProvocation()
+    {
+        return Card.GetAbility().Contains((int) AbilityType.PROVOCATION);
+    }
     
     private void RemoveCardFromList(List<CardController> list)
     {
         if (list.Exists(x => x == this))
             list.Remove(this);
     }
+    
 }

@@ -1,4 +1,5 @@
 using System;
+using Models.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,12 +23,12 @@ public class CardInfo : MonoBehaviour
       
       Logo.sprite = cardController.Card.Logo;
       Logo.preserveAspect = true;
-      WeaponIcon.sprite = cardController.Card.WeaponIcon;
+      WeaponIcon.sprite = cardController.Card.GetWeaponIcon();
       WeaponIcon.preserveAspect = true;
       Name.text = cardController.Card.Name;
       Description.text = cardController.Card.Description;
       
-      if (cardController.Card.IsSpell)
+      if (cardController.Card.IsSpell())
       {
          Attack.gameObject.SetActive(false);
          Health.gameObject.SetActive(false);
@@ -40,11 +41,16 @@ public class CardInfo : MonoBehaviour
    //Обновить prefab карты
    public void RefreshData()
    {
-      Attack.text = (cardController.Card.Attack + cardController.Card.GetWeaponDamage()).ToString();
-      Health.text = cardController.Card.Health.ToString();
-      ManaCost.text = cardController.Card.ManaCost.ToString(); 
-      WeaponIcon.sprite = cardController.Card.WeaponIcon;
-      WeaponIcon.preserveAspect = true;
+      if (!cardController.Card.IsSpell())
+      {
+         Attack.text = (cardController.Card.GetStat(StatType.ATTACK).Value +
+                        cardController.Card.GetWeapon().GetWeaponDamage()).ToString();
+         Health.text = cardController.Card.GetStat(StatType.HEALTH).Value.ToString();
+         WeaponIcon.sprite = cardController.Card.GetWeaponIcon();
+         WeaponIcon.preserveAspect = true;
+      }
+
+      ManaCost.text = cardController.Card.ManaCost.Value.ToString();
    }
    //подсветка карты на то можно ли её использовать на поле
    public void HighlightCard(bool isHighlight)
@@ -54,7 +60,7 @@ public class CardInfo : MonoBehaviour
    //подстветка на то что не хватает маны
    public void HighlightManaAvailability(int currentMana)
    {
-      GetComponent<CanvasGroup>().alpha = currentMana >= cardController.Card.ManaCost ? 1 : .5f;
+      GetComponent<CanvasGroup>().alpha = currentMana >= cardController.Card.ManaCost.Value ? 1 : .5f;
    }
    //подстветка цели для карты на столе
    public void HighlightAsTarget(bool highlight)

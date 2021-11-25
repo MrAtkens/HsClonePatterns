@@ -18,10 +18,10 @@ public class FieldLogic : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         
         var card = eventData.pointerDrag.GetComponent<CardController>();
         //Выставление карты на стол если данный объект является картой
-        if (card && GameManager.Instance.IsPlayerTurn && GameManager.Instance.Player.GetMana() >= card.Card.ManaCost && !card.Card.IsPlaced)
+        if (card && GameManager.Instance.IsPlayerTurn && GameManager.Instance.Player.GetMana() >= card.Card.ManaCost.Value && !card.Card.IsPlaced)
         {
             //Добавление карты в общий список на поле игрока
-            if(!card.Card.IsSpell)
+            if(!card.Card.IsSpell())
                 card.Movement.DefaultParent = transform;
             card.OnCast();
         }

@@ -35,7 +35,7 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         IsDraggable = GameManager.Instance.IsPlayerTurn && 
                     (
                         (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_HAND &&
-                         GameManager.Instance.Player.GetMana() >= CardController.Card.ManaCost) ||
+                         GameManager.Instance.Player.GetMana() >= CardController.Card.ManaCost.Value) ||
                         (DefaultParent.GetComponent<FieldLogic>().Type == FieldType.SELF_FIELD &&
                          CardController.Card.CanAttack)
                     );
@@ -45,7 +45,7 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         
         startID = transform.GetSiblingIndex();
 
-        if(CardController.Card.IsSpell || CardController.Card.CanAttack)
+        if(CardController.Card.IsSpell() || CardController.Card.CanAttack)
             GameManager.Instance.HighlightTargets(CardController,true);
         
         // Выставляем местоположение карты на игровом поле
@@ -68,7 +68,7 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         transform.position = newPosition + offset;
 
         //Если карта является заклинанием анимация не происходит
-        if (!CardController.Card.IsSpell)
+        if (!CardController.Card.IsSpell())
         {
             if (BufferedCard.transform.parent != DefaultBufferCard)
                 BufferedCard.transform.SetParent(DefaultBufferCard);
